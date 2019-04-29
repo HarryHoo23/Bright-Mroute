@@ -56,7 +56,8 @@ class RulesViewController: UIViewController {
         popVc.view.frame = self.view.frame
         self.view.addSubview(popVc.view) // add the view to the view controller to show.
         popVc.didMove(toParent: self)
-        //show the popUp window to show the answer.
+        //show the popUp window to show the answer. Automatically.
+        
         popVc.descriptionLabel.text = ruleDescription
         
         if sender.tag == selectedAnswer { // if it is equal, the answer is correct, else it's wrong.
@@ -70,7 +71,7 @@ class RulesViewController: UIViewController {
         }
     }
     
-    func updateQuestion(){
+    func updateQuestion(){ // This function is updating question when use hit next button, go to the next question.
         if questionNumber <= resultArray.count - 1 {
             //questionNumber start at 0, if it is less than resultArray.count, then the question can start.
             questionLabel.text = resultArray[questionNumber].question
@@ -102,7 +103,8 @@ class RulesViewController: UIViewController {
 
 
 extension RulesViewController{
-    func randomQuestions(){
+    
+    func randomQuestions(){ // this function shows the questions randomly.
         //choose random question from the database.
         var quizArray = [Question]()
         while quizArray.count < 10 && questions.count != 0 {
@@ -120,7 +122,7 @@ extension RulesViewController{
         resultArray = quizArray
     }
     
-    func alert(){
+    func alert(){ // This function shows the alert when the quiz is finished.
         // when finished show alert.
         let alert = UIAlertController(title: "End of Quiz", message: "Do you want to restart?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default, handler: {(action: UIAlertAction) -> Void in self.restartQuiz()})
@@ -130,7 +132,7 @@ extension RulesViewController{
         present(alert, animated: true, completion: nil)
     }
     
-    func restartQuiz(){
+    func restartQuiz(){ // This function is called when the user hit the yes button to restart the quiz.
         // restart the quiz function.
         questionNumber = 0 // set the questionNumber back to 0.
         randomQuestions()

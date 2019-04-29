@@ -118,6 +118,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
 
 extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // default code need to add to implement the image function.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
     }
@@ -141,25 +142,25 @@ extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDa
             //this is based on the parking duration to show all the annotation, taking from parking time.
         case "less30":
             removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 5)
-            addDifferentAnnotation(parkingDuration: 10)
-            addDifferentAnnotation(parkingDuration: 15)
-            addDifferentAnnotation(parkingDuration: 30)
+            addDifferentAnnotation(parkingDuration: 5) // When the parking bay is allowing to park 5 mins.
+            addDifferentAnnotation(parkingDuration: 10)// When the parking bay is allowing to park 10 mins.
+            addDifferentAnnotation(parkingDuration: 15)// When the parking bay is allowing to park 15 mins.
+            addDifferentAnnotation(parkingDuration: 30)// When the parking bay is allowing to park 30 mins.
         case "1PSign":
             removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 60)
+            addDifferentAnnotation(parkingDuration: 60)// When the parking bay is allowing to park 60 mins.
         case "2PSign":
             removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 120)
+            addDifferentAnnotation(parkingDuration: 120)// When the parking bay is allowing to park 2 hours.
         case "3PSign":
             removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 180)
+            addDifferentAnnotation(parkingDuration: 180)// When the parking bay is allowing to park 3 hours.
         case "4PSign":
             removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 240)
+            addDifferentAnnotation(parkingDuration: 240)// When the parking bay is allowing to park 4 hours.
         case "AllDay":
             removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 1440)
+            addDifferentAnnotation(parkingDuration: 1440)// When the parking bay is allowing to park all days.
         default: break
         }
     }
@@ -174,12 +175,12 @@ extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDa
         
         // if statement to determine pin's images depends on the status.
         if annotation.title == "Unoccupied" {
-            annotationView.image = UIImage(named: "greenpin")
+            annotationView.image = UIImage(named: "greenpin") // if it is unoccupied, the annotation is green
         }else{
-            annotationView.image = UIImage(named: "pin")
+            annotationView.image = UIImage(named: "pin")// if it is occupied, the annotation is red
         }
         
-        annotationView.canShowCallout = true
+        annotationView.canShowCallout = true // the annotation can be touched. 
         annotationView.isEnabled = true
         
         let btn = UIButton(type: .infoLight)
