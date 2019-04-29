@@ -21,8 +21,8 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
     var imageArray = ["Information Center" ,
                       "Toilet",
                       "Park",
-                      "Office",
-                      "Parking Lot"]
+                      "Office"
+                      ]
     // the arrayList of image, stored including the facility's names.
     var locationManager: CLLocationManager = CLLocationManager()
     var facility = [Facility]()
