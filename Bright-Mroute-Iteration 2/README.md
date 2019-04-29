@@ -1,5 +1,7 @@
 # Bright-Mroute-Version-1
-The first version of the bright-mroute.
+The Scond version of the bright-mroute.
+
+This is iteration 2 of the Bright-Mroute.
 
 Open the Mroute folder.
 
