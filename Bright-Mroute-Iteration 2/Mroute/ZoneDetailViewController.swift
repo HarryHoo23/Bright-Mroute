@@ -71,7 +71,7 @@ class ZoneDetailViewController: UIViewController, CLLocationManagerDelegate {
             titleLabel.text = "Prone Zone Detail"
             nameLabel.text = "Road Type: " + name!
             criticalLabel.text = "Critical Level: " + critical!
-            frequencyLabel.text = "Accident Happened Frequency: " + "\(frequency!) Times"
+            frequencyLabel.text = "Accident Frequency: " + "\(frequency!) Times"
             typeLabel.text = speedZone!
             instructionLabel.text = ""
         }

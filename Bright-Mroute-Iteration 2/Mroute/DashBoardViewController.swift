@@ -22,12 +22,13 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     var quizArray = [Question]()
     var parking = [ParkingLot]()
     
-//    @IBAction func roadAssistanceButton(_ sender: Any) {
+    @IBAction func roadAssistanceButton(_ sender: Any) {
 //        let phoneNumber = "1800105211"
 //        if let phoneURL = URL(string: "tel://\(phoneNumber)"){
 //            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
 //        }
-//    }
+        print("Tap")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

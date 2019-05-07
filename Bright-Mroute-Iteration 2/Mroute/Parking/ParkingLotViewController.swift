@@ -38,6 +38,8 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         //Keep tracking user's current location when press button.
     }
     
+    let regionRadius: CLLocationDistance = 2500
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.parkingLotMap.delegate = self
@@ -47,6 +49,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         self.parkingCollectionView.delegate = self
         // state the delegate of collection view in order to show pictures.
         self.parkingCollectionView.dataSource = self
+        let initialLocation = CLLocation(latitude: -37.814, longitude: 144.96332)
         parkingCollectionView.backgroundColor = UIColor(displayP3Red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
         // set the collection view cell background color.
     
@@ -55,8 +58,8 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
             self.parkingLotMap.userLocation.title = "Your Current Location"
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-            centerViewOnUserLocation()
+            //locationManager.startUpdatingLocation()
+            centerMapOnLocation(location: initialLocation)
         }else{
             print("error")
         }
@@ -73,6 +76,12 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
             let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionMeters, longitudinalMeters: regionMeters)
             parkingLotMap.setRegion(region, animated: true)
         }
+    }
+    
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
+                                                  latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        parkingLotMap.setRegion(coordinateRegion, animated: true)
     }
     
     func addAnnotation(){ // add all annotation on map.
