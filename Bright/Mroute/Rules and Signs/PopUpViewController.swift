@@ -28,11 +28,6 @@ class PopUpViewController: UIViewController {
 //            descriptionLabel.frame.origin = CGPoint(x: 8, y: 200)
 //        }
         
-        
-        
-       
-        
-        // Do any additional setup after loading the view.
     }
     
     func showAnimate(){

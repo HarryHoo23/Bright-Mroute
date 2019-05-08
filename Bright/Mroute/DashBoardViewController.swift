@@ -39,11 +39,16 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         addParkingLot()
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
+        let signOutButton = UIBarButtonItem(title: "Sign Out", style: .done, target: self, action: #selector(tapButton))
+        self.navigationItem.rightBarButtonItem = signOutButton
+        // to change the map type
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addQuestion()
+        //let userID = Auth.auth().currentUser!.uid
+
     }
     
     // add facility data into facility arraylist.
@@ -195,4 +200,11 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         }
     }
     
+    @objc func tapButton(){
+        do {
+            try Auth.auth().signOut()
+        }catch {}
+
+        self.dismiss(animated: true, completion: nil)
+    }
 }

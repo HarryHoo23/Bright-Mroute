@@ -143,19 +143,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                 self.parkingLotMap.addAnnotation(toiletsAnnotation as MKAnnotation)
             }
         }
-//
-//        for data in parking {
-//            if data.timeDuration! == parkingDuration {
-//                let latitude = data.latitude!
-//                let longitude = data.longitude!
-//                let status = data.status!
-//                let type = data.parkingDuration!
-//                let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
-//                let toiletsAnnotation = Annotation(newTitle: status, subtitle: "Parking Duration: " + type, location: fenceAnnotation)
-//                self.parkingLotMap.addAnnotation(toiletsAnnotation as MKAnnotation)
-//
-//            }
-//        }
+
     }
 
     func removeAnnotation(){
