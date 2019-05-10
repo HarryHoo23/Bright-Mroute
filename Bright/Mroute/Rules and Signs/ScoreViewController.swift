@@ -58,7 +58,7 @@ class ScoreViewController: UIViewController {
         }
         self.scoreView.value = 0
         creditImage.animationImages = image
-        creditImage.animationDuration = 3.0
+        creditImage.animationDuration = 4.0
         creditImage.animationRepeatCount = 1
         creditImage.startAnimating()
         creditImage.image = creditImage.animationImages?.last

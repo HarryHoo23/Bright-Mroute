@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var backgroundImage: UIImageView!
     
     var handle: AuthStateDidChangeListenerHandle?
 
@@ -24,14 +25,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         signUpButton.changeButton()
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
-        let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
-        view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
+//        let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
+//        let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
+//        //view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
+
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+         backgroundImage.loadGif(name: "background")
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
             if user != nil{
             }
@@ -90,6 +93,5 @@ extension UIButton {
         self.layer.shadowRadius = 5
         self.layer.shadowOpacity = 0.5
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
     }
 }

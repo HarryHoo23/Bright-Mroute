@@ -33,6 +33,7 @@
 		46AD8C7C227412D70067AE83 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AD8C7B227412D70067AE83 /* PopUpViewController.swift */; };
 		46AD8C8022744C800067AE83 /* ParkingLotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AD8C7F22744C800067AE83 /* ParkingLotViewController.swift */; };
 		46AD8C8222744D6B0067AE83 /* ParkingLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AD8C8122744D6B0067AE83 /* ParkingLot.swift */; };
+		46C6B5502283E7FB00B8E0BE /* background.gif in Resources */ = {isa = PBXBuildFile; fileRef = 46C6B54F2283E7FA00B8E0BE /* background.gif */; };
 		88C1CFD8934FFC59614733A9 /* Pods_MrouteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3BCE773A19700BBC79462D /* Pods_MrouteUITests.framework */; };
 		9020FB4DA0C4AEF89F8C8C67 /* Pods_MrouteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FAC3FE5FA6B15CD4E0284A /* Pods_MrouteTests.framework */; };
 		B71752F622707D2D00E43128 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71752F522707D2D00E43128 /* Question.swift */; };
@@ -108,6 +109,7 @@
 		46AD8C7B227412D70067AE83 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		46AD8C7F22744C800067AE83 /* ParkingLotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingLotViewController.swift; sourceTree = "<group>"; };
 		46AD8C8122744D6B0067AE83 /* ParkingLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingLot.swift; sourceTree = "<group>"; };
+		46C6B54F2283E7FA00B8E0BE /* background.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = background.gif; sourceTree = "<group>"; };
 		4AFDAAEC93AA9BBB3A077F9A /* Pods_Mroute.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mroute.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71752F522707D2D00E43128 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Question.swift; path = ../Question.swift; sourceTree = "<group>"; };
 		B72AB2A62254FC1500904875 /* HookTurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookTurn.swift; sourceTree = "<group>"; };
@@ -131,7 +133,7 @@
 		B7AE2754224E532000A2EAD7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B7AE2757224E54B500A2EAD7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B7AE2759224E5C9B00A2EAD7 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
-		B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
+		B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RulesViewController.swift; path = "Rules and Signs/RulesViewController.swift"; sourceTree = "<group>"; };
 		B7B590F12278870300E72E75 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		B7B590F32281725F00E72E75 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B7B590F52281756800E72E75 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -213,7 +215,6 @@
 			children = (
 				B7AE2754224E532000A2EAD7 /* MapViewController.swift */,
 				461F4D1D2259B39B001D067F /* ZoneDetailViewController.swift */,
-				4694C4572255919E00F5363E /* ProneZone.swift */,
 				B72AB2A62254FC1500904875 /* HookTurn.swift */,
 			);
 			name = "prone zones";
@@ -223,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				46AD8C7B227412D70067AE83 /* PopUpViewController.swift */,
-				B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */,
 				B7B590F12278870300E72E75 /* ScoreViewController.swift */,
 				B71752F522707D2D00E43128 /* Question.swift */,
 			);
@@ -268,16 +268,19 @@
 				463404062277036400E23A7D /* 23dong.gif */,
 				463404092277036400E23A7D /* 25dong.gif */,
 				463404072277036400E23A7D /* 28dong.gif */,
+				46C6B54F2283E7FA00B8E0BE /* background.gif */,
 				B7AE2721224E4F1600A2EAD7 /* AppDelegate.swift */,
 				B7AE2759224E5C9B00A2EAD7 /* Annotation.swift */,
 				B7AE2752224E4F9E00A2EAD7 /* DashBoardViewController.swift */,
 				46AD8C4E22655D380067AE83 /* UIImage+Gif.swift */,
 				4694C4622255B38B00F5363E /* Location+CoreDataClass.swift */,
 				4694C4612255B38B00F5363E /* Location+CoreDataProperties.swift */,
-				461F4D23225C72B4001D067F /* SettingViewController.swift */,
+				B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */,
 				B7B590F32281725F00E72E75 /* LoginViewController.swift */,
-				B73EBE632281CBD800EDD651 /* UIView+Extension.swift */,
 				B7B590F52281756800E72E75 /* SignUpViewController.swift */,
+				4694C4572255919E00F5363E /* ProneZone.swift */,
+				461F4D23225C72B4001D067F /* SettingViewController.swift */,
+				B73EBE632281CBD800EDD651 /* UIView+Extension.swift */,
 				46AD8C59226607EB0067AE83 /* Rules and Signs */,
 				46AD8C58226607A30067AE83 /* prone zones */,
 				46AD8C572266079F0067AE83 /* Parking */,
@@ -435,6 +438,7 @@
 				463404102277036500E23A7D /* 6dong.gif in Resources */,
 				B74D5B7B226940B6007D3078 /* hookTurn.gif in Resources */,
 				B7AE272F224E4F1800A2EAD7 /* LaunchScreen.storyboard in Resources */,
+				46C6B5502283E7FB00B8E0BE /* background.gif in Resources */,
 				B7AE272C224E4F1800A2EAD7 /* Assets.xcassets in Resources */,
 				B7AE2727224E4F1600A2EAD7 /* Main.storyboard in Resources */,
 				4634040F2277036500E23A7D /* 15dong.gif in Resources */,

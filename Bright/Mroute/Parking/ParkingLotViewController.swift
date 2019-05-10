@@ -94,7 +94,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         
         let button = UIBarButtonItem(title: "Show All", style: .done, target: self, action: #selector(showAll))
         self.navigationItem.rightBarButtonItem = button
-        //retrieveData()
+
 
     }
     
@@ -102,6 +102,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         super.viewWillAppear(animated)
         retrieveData()
     }
+    
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate,

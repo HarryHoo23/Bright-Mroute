@@ -11,6 +11,15 @@ import UIKit
 import Firebase // import firebase source code.
 import MapKit
 
+struct provider {
+    var name: String?
+    var phoneNumber: String?
+    
+    init(providerName: String, phone: String) {
+        name = providerName
+        phoneNumber = phone
+    }
+}
 
 class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate  {
     
@@ -22,7 +31,22 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     var hookTurn = [HookTurn]() // create the array of hookturn, saved as object.
     var quizArray = [Question]()
     var parking = [ParkingLot]()
+    var roadAssistance = [provider]()
     var marker = [String]()
+    var providerName: String?
+    var phoneNumber: String?
+    var longitude: Double?
+    var latidude: Double?
+    var degree: Int!
+    var condition: String!
+    var city : String!
+    var imageUrl : String!
+    
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var weatherImageView: UIImageView!
+    
     
     @IBAction func roadAssistanceButton(_ sender: Any) {
         let phoneNumber = "1800105211"
@@ -39,14 +63,25 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         addParkingLot()
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
-        let signOutButton = UIBarButtonItem(title: "Sign Out", style: .done, target: self, action: #selector(tapButton))
-        self.navigationItem.rightBarButtonItem = signOutButton
+        let image = UIImage(named: "phone")
+        let location = locationManager.location
+        longitude = location?.coordinate.longitude
+        latidude = location?.coordinate.latitude
+        self.ref = Database.database().reference().child("RoadAssistance")
+
+        let phoneButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(tapButton))
+        self.navigationItem.rightBarButtonItem = phoneButton
+//        let signOutButton = UIBarButtonItem(title: "Sign Out", style: .done, target: self, action: #selector(tapButton))
+//        self.navigationItem.rightBarButtonItem = signOutButton
         // to change the map type
+        //saveRoadAssistance()
+        getWeather()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addQuestion()
+        saveRoadAssistance()
         //let userID = Auth.auth().currentUser!.uid
 
     }
@@ -199,12 +234,93 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
             pc?.parking = self.parking
         }
     }
-    
+  
     @objc func tapButton(){
-        do {
-            try Auth.auth().signOut()
-        }catch {}
+        print(self.phoneNumber!)
+        if let phoneURL = URL(string: "tel://\(self.phoneNumber!)"){
+            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+        }
+    }
+}
 
-        self.dismiss(animated: true, completion: nil)
+extension DashBoardViewController {
+    
+    func saveRoadAssistance(){
+        self.ref.observe(.value, with: { (snapshot) in
+            for data in snapshot.children.allObjects as! [DataSnapshot]{
+                let object = data.value as? [String : AnyObject]
+                let name = object?["Company"] as! String
+                let phone = object?["Phone"] as! String
+                let assistance = provider(providerName: name, phone: phone)
+                self.roadAssistance.append(assistance)
+                //print(self.roadAssistance.count)
+            }
+            print(self.roadAssistance.count)
+            let uid = Auth.auth().currentUser?.uid
+            Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.providerName = dictionary["roadAssistance"] as? String
+                    print(self.providerName!)
+                    for data in self.roadAssistance {
+                        if self.providerName! == data.name {
+                            self.phoneNumber = data.phoneNumber
+                            print(self.phoneNumber!)
+                        }
+                    }
+                }
+            })
+        })
+    }
+    
+    func getWeather(){
+        let url = "http://api.apixu.com/v1/current.json?key=b7d3f33abecc4920a1d43056191005&q=" + "\(latidude!)," + "\(longitude!)"
+        guard let jsonUrl = URL(string: url) else {return}
+        URLSession.shared.dataTask(with: jsonUrl) {(data, response, error) in
+            if error == nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String : AnyObject]
+                    if let current = json["current"] as? [String : AnyObject]{
+                        if let temp = current["temp_c"] as? Int {
+                            self.degree = temp
+                        }
+                        if let condition = current["condition"] as? [String : AnyObject] {
+                            let currentCondition = condition["text"] as! String
+                            self.condition = currentCondition
+                            let icon = condition["icon"] as! String
+                            self.imageUrl = "http:\(icon)"
+                        }
+                        if let location = json["location"] as? [String : AnyObject] {
+                            self.city = location["name"] as! String
+                        }
+                        DispatchQueue.main.async {
+                            self.temperatureLabel.text = "Current Temperature: " + "\(self.degree!)"
+                            self.cityLabel.text = "City: " + self.city!
+                            self.conditionLabel.text = "Weather Condition: " + self.condition!
+                            self.weatherImageView.download(from: self.imageUrl!)
+                        }
+                    }
+                    
+                }catch {
+                    print(error.localizedDescription)
+                }
+            }
+            
+            
+        }.resume()
+    }
+}
+
+extension UIImageView {
+    func download(from url : String){
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        
+        let task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.image = UIImage (data: data!)
+                }
+            }
+        }
+        task.resume()
     }
 }

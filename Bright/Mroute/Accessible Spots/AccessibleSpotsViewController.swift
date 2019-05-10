@@ -162,7 +162,6 @@ extension AccessibleSpotsViewController: UICollectionViewDelegate, UICollectionV
         cell.acImage.layer.borderWidth = 3
         cell.acImage.layer.masksToBounds = true
         cell.acImage.layer.cornerRadius = cell.acImage.frame.size.width / 2
-        
         cell.acLabel.text = imageArray[indexPath.row]
         return cell
     }
