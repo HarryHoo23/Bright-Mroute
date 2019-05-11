@@ -39,6 +39,7 @@
 		B71752F622707D2D00E43128 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71752F522707D2D00E43128 /* Question.swift */; };
 		B72AB2A72254FC1500904875 /* HookTurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72AB2A62254FC1500904875 /* HookTurn.swift */; };
 		B73EBE642281CBD800EDD651 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73EBE632281CBD800EDD651 /* UIView+Extension.swift */; };
+		B73EBE6822864D0F00EDD651 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73EBE6722864D0F00EDD651 /* ResetPasswordViewController.swift */; };
 		B74D5B7B226940B6007D3078 /* hookTurn.gif in Resources */ = {isa = PBXBuildFile; fileRef = B74D5B7A226940B5007D3078 /* hookTurn.gif */; };
 		B76B14CA2275C4340014D563 /* MapPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76B14C92275C4340014D563 /* MapPopUpViewController.swift */; };
 		B7AE2722224E4F1600A2EAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AE2721224E4F1600A2EAD7 /* AppDelegate.swift */; };
@@ -114,6 +115,7 @@
 		B71752F522707D2D00E43128 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Question.swift; path = ../Question.swift; sourceTree = "<group>"; };
 		B72AB2A62254FC1500904875 /* HookTurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookTurn.swift; sourceTree = "<group>"; };
 		B73EBE632281CBD800EDD651 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		B73EBE6722864D0F00EDD651 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResetPasswordViewController.swift; path = ../ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		B74D5B7A226940B5007D3078 /* hookTurn.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = hookTurn.gif; sourceTree = "<group>"; };
 		B76B14C92275C4340014D563 /* MapPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapPopUpViewController.swift; path = ../MapPopUpViewController.swift; sourceTree = "<group>"; };
 		B7AE271E224E4F1600A2EAD7 /* Mroute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mroute.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,7 +135,7 @@
 		B7AE2754224E532000A2EAD7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B7AE2757224E54B500A2EAD7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B7AE2759224E5C9B00A2EAD7 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
-		B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RulesViewController.swift; path = "Rules and Signs/RulesViewController.swift"; sourceTree = "<group>"; };
+		B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
 		B7B590F12278870300E72E75 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		B7B590F32281725F00E72E75 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B7B590F52281756800E72E75 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 		46AD8C59226607EB0067AE83 /* Rules and Signs */ = {
 			isa = PBXGroup;
 			children = (
+				B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */,
 				46AD8C7B227412D70067AE83 /* PopUpViewController.swift */,
 				B7B590F12278870300E72E75 /* ScoreViewController.swift */,
 				B71752F522707D2D00E43128 /* Question.swift */,
@@ -275,9 +278,9 @@
 				46AD8C4E22655D380067AE83 /* UIImage+Gif.swift */,
 				4694C4622255B38B00F5363E /* Location+CoreDataClass.swift */,
 				4694C4612255B38B00F5363E /* Location+CoreDataProperties.swift */,
-				B7AE275B2250DC5B00A2EAD7 /* RulesViewController.swift */,
 				B7B590F32281725F00E72E75 /* LoginViewController.swift */,
 				B7B590F52281756800E72E75 /* SignUpViewController.swift */,
+				B73EBE6722864D0F00EDD651 /* ResetPasswordViewController.swift */,
 				4694C4572255919E00F5363E /* ProneZone.swift */,
 				461F4D23225C72B4001D067F /* SettingViewController.swift */,
 				B73EBE632281CBD800EDD651 /* UIView+Extension.swift */,
@@ -575,6 +578,7 @@
 			files = (
 				B7CA7E7E225ECE8900B6D4C6 /* ImageCollectionViewCell.swift in Sources */,
 				B76B14CA2275C4340014D563 /* MapPopUpViewController.swift in Sources */,
+				B73EBE6822864D0F00EDD651 /* ResetPasswordViewController.swift in Sources */,
 				B7B590F22278870300E72E75 /* ScoreViewController.swift in Sources */,
 				4694C4642255B38B00F5363E /* Location+CoreDataClass.swift in Sources */,
 				B73EBE642281CBD800EDD651 /* UIView+Extension.swift in Sources */,

@@ -66,7 +66,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.performSegue(withIdentifier: "loginSegue", sender: self)
             }
         }
-
     }
     
     func displayMessage(_ message: String, _ title: String) {

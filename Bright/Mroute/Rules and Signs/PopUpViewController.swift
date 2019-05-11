@@ -13,21 +13,18 @@ class PopUpViewController: UIViewController {
     @IBOutlet weak var descriptionImage: UIImageView!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionNewLabel: UILabel!
     @IBAction func closePopUp(_ sender: Any) {
         removeAnimate()
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         self.showAnimate()
-        
-        descriptionLabel.frame = CGRect(x: 8, y: 358, width: 327, height: 160)
-//        if descriptionImage.image == nil{
-//            print("Cannot find")
-//            descriptionLabel.frame.origin = CGPoint(x: 8, y: 200)
-//        }
-        
+        descriptionImage.layer.cornerRadius = 10
+//        descriptionLabel.isHidden = false
     }
     
     func showAnimate(){

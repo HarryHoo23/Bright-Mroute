@@ -35,6 +35,10 @@ class ScoreViewController: UIViewController {
         super.viewDidLoad()
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "cloud")!.image(alpha: 0.9)!)
         //self.scoreView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        scoreView.layer.cornerRadius = 115
+        let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
+        let grayColor = UIColor(red: 252/255, green: 250/255, blue: 253/255, alpha: 1)
+        view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
         if (score! >= 0 && score! <= 2){
             conditionLabel.text = "Poor, really?"
             for i in 0..<poorNames.count{

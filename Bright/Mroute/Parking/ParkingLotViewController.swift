@@ -144,7 +144,6 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                 self.parkingLotMap.addAnnotation(toiletsAnnotation as MKAnnotation)
             }
         }
-
     }
 
     func removeAnnotation(){
@@ -184,7 +183,6 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                     self.smart = self.smart.sorted {$0.bayId! < $1.bayId!}
                 }
                 
-
                 for i in self.markers{
                     let smartParkings = smartParking.filter{$0.bay_id == i}
                     self.p.append(contentsOf: smartParkings)

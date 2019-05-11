@@ -46,14 +46,9 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var weatherView: UIView!
+    @IBOutlet weak var welcomeLabel: UILabel!
     
-    
-    @IBAction func roadAssistanceButton(_ sender: Any) {
-        let phoneNumber = "1800105211"
-        if let phoneURL = URL(string: "tel://\(phoneNumber)"){
-            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +63,16 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         longitude = location?.coordinate.longitude
         latidude = location?.coordinate.latitude
         self.ref = Database.database().reference().child("RoadAssistance")
-
+        let yellowColor = UIColor(red: 255/255, green: 255/255, blue: 126/255, alpha: 1)
+        let orangeColor = UIColor(red: 255/255, green: 255/255, blue: 204/255, alpha: 1)
+        let lightOrangeColor = UIColor(red: 252/255, green: 214/255, blue: 112/255, alpha: 1)
+        view.setGradientBackgroundColor(colorOne: lightOrangeColor, colorTwo: yellowColor)
+        weatherView.backgroundColor = orangeColor
+        weatherView.layer.cornerRadius = 20
         let phoneButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(tapButton))
         self.navigationItem.rightBarButtonItem = phoneButton
-//        let signOutButton = UIBarButtonItem(title: "Sign Out", style: .done, target: self, action: #selector(tapButton))
-//        self.navigationItem.rightBarButtonItem = signOutButton
-        // to change the map type
-        //saveRoadAssistance()
         getWeather()
+        addUserName()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,6 +83,15 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
 
     }
     
+    func addUserName(){
+        let uid = Auth.auth().currentUser?.uid
+        Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let name = dictionary["firstName"] as? String
+                self.welcomeLabel.text = "Welcome " + name! + "!"
+            }
+        })
+    }
     // add facility data into facility arraylist.
     func addFacility(){
         var newFacility = [Facility]()
@@ -236,7 +242,6 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     }
   
     @objc func tapButton(){
-        print(self.phoneNumber!)
         if let phoneURL = URL(string: "tel://\(self.phoneNumber!)"){
             UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
         }
@@ -253,18 +258,14 @@ extension DashBoardViewController {
                 let phone = object?["Phone"] as! String
                 let assistance = provider(providerName: name, phone: phone)
                 self.roadAssistance.append(assistance)
-                //print(self.roadAssistance.count)
             }
-            print(self.roadAssistance.count)
             let uid = Auth.auth().currentUser?.uid
             Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.providerName = dictionary["roadAssistance"] as? String
-                    print(self.providerName!)
                     for data in self.roadAssistance {
                         if self.providerName! == data.name {
                             self.phoneNumber = data.phoneNumber
-                            print(self.phoneNumber!)
                         }
                     }
                 }
@@ -293,9 +294,9 @@ extension DashBoardViewController {
                             self.city = location["name"] as! String
                         }
                         DispatchQueue.main.async {
-                            self.temperatureLabel.text = "Current Temperature: " + "\(self.degree!)"
-                            self.cityLabel.text = "City: " + self.city!
-                            self.conditionLabel.text = "Weather Condition: " + self.condition!
+                            self.temperatureLabel.text = "\(self.degree!) °C"
+                            self.cityLabel.text = self.city!
+                            self.conditionLabel.text = self.condition!
                             self.weatherImageView.download(from: self.imageUrl!)
                         }
                     }

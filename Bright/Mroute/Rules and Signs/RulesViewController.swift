@@ -43,12 +43,15 @@ class RulesViewController: UIViewController {
     var selectedAnswer: Int = 0
     var score: Int = 0
     var buttonsArray = [UIButton]()
+    var picture = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!) // the background image of this view Controller
-        self.view.contentMode = UIView.ContentMode.scaleAspectFill
+        let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
+        let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
+        view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)// the background image of this view Controller
+        questionImage.layer.cornerRadius = 10
         optionA.applyButton()
         optionB.applyButton()
         optionC.applyButton()
@@ -58,6 +61,15 @@ class RulesViewController: UIViewController {
         if resultArray.count != 0 {
             restartQuiz()
             updateProgress()
+        }
+        let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! fm.contentsOfDirectory(atPath: path)
+        
+        for data in items {
+            if data.hasSuffix("gif") {
+                picture.append(data)
+            }
         }
     }
     
@@ -76,8 +88,27 @@ class RulesViewController: UIViewController {
         self.view.addSubview(popVc.view) // add the view to the view controller to show.
         popVc.didMove(toParent: self)
         //show the popUp window to show the answer.
-        popVc.descriptionLabel.text = ruleDescription
-        
+        if picture.contains("\(resultArray[questionNumber].number)dong.gif") {
+            print("Yes")
+            popVc.descriptionLabel.text = ruleDescription
+        } else {
+            print("wrong")
+            popVc.descriptionNewLabel.text = ruleDescription
+        }
+//        for name in picture {
+//            if name.contains("\(resultArray[questionNumber].number)dong.gif")  {
+//                popVc.descriptionLabel.text = ruleDescription
+//                popVc.descriptionNewLabel.text = ""
+//                print("\(resultArray[questionNumber].number)dong.gif")
+//            } else {
+//                print("Wrong")
+//            }
+//            if name != "\(resultArray[questionNumber].number)dong.gif" {
+//                popVc.descriptionNewLabel.text = ruleDescription
+//                popVc.descriptionLabel.text = ""
+//                print("Wrong")
+//            }
+        //}
         if sender.tag == selectedAnswer { // if it is equal, the answer is correct, else it's wrong.
             score += 1
             popVc.answerLabel.text = "You are Correct!!"

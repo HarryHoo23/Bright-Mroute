@@ -23,11 +23,23 @@ class SettingViewController: UIViewController {
         profilePicImage.layer.cornerRadius = profilePicImage.frame.size.width / 2
         let signOutButton = UIBarButtonItem(title: "Sign Out", style: .done, target: self, action: #selector(tapButton))
         self.navigationItem.rightBarButtonItem = signOutButton
+        checkIfUserIsLoggedIn()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkIfUserIsLoggedIn()
+        let uid = Auth.auth().currentUser?.uid
+        let url = Storage.storage().reference().child("\(uid!).png")
+        DispatchQueue.main.async {
+            url.getData(maxSize: 10 * 1024 * 1024) { (data, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }else {
+                    self.profilePicImage.image = UIImage(data: data!)
+                }
+            }
+        }
+        
     }
     
     func checkIfUserIsLoggedIn(){
@@ -43,17 +55,6 @@ class SettingViewController: UIViewController {
                     self.providerLabel.text = "Your Provider: " + self.roadAssist!
                 }
             })
-            let url = Storage.storage().reference().child("\(uid!).png")
-            
-            DispatchQueue.main.async {
-                url.getData(maxSize: 10 * 1024 * 1024) { (data, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    }else {
-                        self.profilePicImage.image = UIImage(data: data!)
-                    }
-                }
-            }
         }
     }
     

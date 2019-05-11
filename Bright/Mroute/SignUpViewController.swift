@@ -16,15 +16,20 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var repeatPasswordTextField: UITextField!
     @IBOutlet weak var signButton: UIButton!
     @IBOutlet weak var goBackButton: UIButton!
     @IBOutlet weak var roadAssistancePickerTextField: UITextField!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     var handle: AuthStateDidChangeListenerHandle?
     var roadAssistance = [String]()
     var roadProvider = [provider]()
     var selectedProvider: String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +43,18 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         createPicker()
         createToolBar()
         profileImage.image = UIImage(named: "profile")
+        profileImage.clipsToBounds = true
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.layer.borderColor = UIColor.gray.cgColor
+        profileImage.layer.borderWidth = 2
+        let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
+        let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
+        backgroundView.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
+        view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
         imageTap()
         let backButton = UIBarButtonItem(title: "< Back", style: .done, target: self, action: #selector(goBack))
         self.navigationItem.leftBarButtonItem = backButton
+        activityIndicator.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,16 +76,27 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         guard let lastName = lastNameTextField.text else { return }
         guard let email = emailAddressTextField.text else { return }
         guard let password = passwordTextField.text else { return }
+        guard let confirmPassword = repeatPasswordTextField.text, repeatPasswordTextField.text == password  else {
+            displayErrorMessage("Two password doesn't match each other!", "Error")
+            return
+        }
+        
+        if isValidEmail(testStr: email) == false {
+            displayErrorMessage("The email address is not correct!", "Wrong Email Address")
+        }
+        
         guard let roadAssist = roadAssistancePickerTextField.text else { return }
-
         Auth.auth().createUser(withEmail: email, password: password) { (auth, error) in
             guard let uid = auth?.user.uid else {return}
             if error == nil && auth != nil {
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
+                UIApplication.shared.beginIgnoringInteractionEvents()
                 let storageRef = Storage.storage().reference().child("\(uid).png")
                 if let upload = self.profileImage.image!.pngData(){
                     storageRef.putData(upload, metadata: nil, completion: { (metadata, error) in
                         if error != nil {
-                            print(error?.localizedDescription)
+                            self.displayErrorMessage(error!.localizedDescription, "Error")
                         } else {
                             storageRef.downloadURL(completion: { (url, error) in
                                 let values = ["firstName": firstname, "lastName": lastName, "email": email, "profileImageUrl": url?.absoluteString, "roadAssistance" : roadAssist]
@@ -81,7 +106,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     })
                 }
             }else {
-                print(error?.localizedDescription)
                 self.displayMessage(error!.localizedDescription, "Error")
             }
         }
@@ -90,14 +114,16 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     private func registerUserIntoDatabaseWithUid(uid: String, values: [String :AnyObject]){
         let ref = Database.database().reference(fromURL: "https://mroute-project.firebaseio.com/")
         let usersReference = ref.child("Users").child(uid)
-        //let values = ["firstName": firstname, "lastName": lastName, "email": email]
         usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if err != nil {
-                print(err?.localizedDescription)
+                self.displayErrorMessage(err!.localizedDescription, "Error")
                 return
             } else {
                 print("Successfully saved into database")
                 self.displayMessage("The Account Was Created Successfully!", "Success")
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
         })
     }
@@ -109,7 +135,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     func createPicker(){
         let picker = UIPickerView()
         picker.delegate = self
-        
         roadAssistancePickerTextField.inputView = picker
     }
     
@@ -184,7 +209,17 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func displayMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .default) {action -> Void in
+                self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayErrorMessage(_ message: String, _ title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let dismissAction: UIAlertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alertController.addAction(dismissAction)
         self.present(alertController, animated: true, completion: nil)
     }
 
@@ -200,6 +235,13 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
     }
 }
 
