@@ -23,7 +23,7 @@ class CyclistsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        infoLabel.text = "No Bike?\n\nNo Problem, click here." //Show basic info
+        infoLabel.text = "Don't own a bike?\n\nNo Problem, Click here to hire one." //Show basic info
         routeTableView.delegate = self
         routeTableView.dataSource = self
     }

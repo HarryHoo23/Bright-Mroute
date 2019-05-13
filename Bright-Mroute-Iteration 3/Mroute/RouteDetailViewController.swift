@@ -188,9 +188,23 @@ class RouteDetailViewController: UIViewController, MKMapViewDelegate {
         annotationView.image = UIImage(named: "pin")
         annotationView.canShowCallout = true
         annotationView.isEnabled = true
+        
+        let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero,
+                                                size: CGSize(width: 40, height: 40)))
+        mapsButton.setBackgroundImage(UIImage(named: "mapkit"), for: UIControl.State()) // the button look like a map button.
+        annotationView.rightCalloutAccessoryView = mapsButton
         // allow user to tap the annotation.
         return annotationView
     }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
+        let location = view.annotation as! Annotation
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        location.mapItem().openInMaps(launchOptions: launchOptions) // navigate to the map.
+        // after tap the annotation can jump to the map to launch navigation.
+    }
+    
     
     func addRoute(startLocation: CLLocationCoordinate2D, endLocation: CLLocationCoordinate2D) { //draw the route function.
         let sourcePlaceMark = MKPlacemark(coordinate: startLocation, addressDictionary: nil) // start point
