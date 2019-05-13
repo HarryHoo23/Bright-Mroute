@@ -52,8 +52,8 @@ class RouteDetailViewController: UIViewController, MKMapViewDelegate {
     let mornington1 = CLLocationCoordinate2D(latitude: -37.866661, longitude: 144.973984)
     let mornington2 = CLLocationCoordinate2D(latitude: -38.012790, longitude: 145.092620)
     let mornington3 = CLLocationCoordinate2D(latitude: -38.202380, longitude: 145.117060)
-    let mornington4 = CLLocationCoordinate2D(latitude: -37.684040, longitude: 144.461480)
-    let mornington5 = CLLocationCoordinate2D(latitude: -38.211570, longitude: 145.050990)
+    let mornington4 = CLLocationCoordinate2D(latitude: -38.211570, longitude: 145.050990)
+    let mornington5 = CLLocationCoordinate2D(latitude: -38.012790, longitude: 145.092620)
     let mornington6 = CLLocationCoordinate2D(latitude: -37.866661, longitude: 144.973984)
     
     let beach1 = CLLocationCoordinate2D(latitude: -37.866661, longitude: 144.973984)
