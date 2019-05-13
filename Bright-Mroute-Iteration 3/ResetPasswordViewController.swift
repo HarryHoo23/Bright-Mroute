@@ -9,12 +9,14 @@
 import UIKit
 import Firebase
 
-class ResetPasswordViewController: UIViewController {
+class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailAddress: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailAddress.delegate = self
+        //add the background color.
         let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
         let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
         view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
@@ -30,7 +32,7 @@ class ResetPasswordViewController: UIViewController {
         if isValidEmail(testStr: email) == false {
             displayErrorMessage("The email is invalid, please check!", "Invalid Email Address")
         }
-        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in // send the email
             if error != nil {
                 print(error?.localizedDescription)
             }else {
@@ -65,5 +67,15 @@ class ResetPasswordViewController: UIViewController {
         }
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

@@ -40,8 +40,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                       "1PSign",
                       "2PSign",
                       "3PSign",
-                      "4PSign",
-                      "AllDay"]
+                      "4PSign"]
     // the arraylist of image name, so that can show different image by retrieve from the array.
     var selectedAnnotation: MKAnnotation?
     var status: String?
@@ -67,7 +66,6 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         let initialLocation = CLLocation(latitude: -37.814, longitude: 144.96332)
         retrieveData()
         self.parkingLotMap.delegate = self
-        addAnnotation()
         parkingLotMap.isZoomEnabled = true
         parkingLotMap.isScrollEnabled = true
         //needed source code
@@ -94,14 +92,10 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         
         let button = UIBarButtonItem(title: "Show All", style: .done, target: self, action: #selector(showAll))
         self.navigationItem.rightBarButtonItem = button
-
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         retrieveData()
+
     }
+
     
     
     func centerMapOnLocation(location: CLLocation) {
@@ -118,19 +112,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
             parkingLotMap.setRegion(region, animated: true)
         }
     }
-    
-    func addAnnotation(){ // add all annotation on map.
-        for index in 0..<smart.count{
-            let latitude = smart[index].latitude!
-            let longitude = smart[index].longitude!
-            let status = p[index].status
-            let type = smart[index].parkingDuration!
-            let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
-            let toiletsAnnotation = Annotation(newTitle: status, subtitle: "Parking Duration: " + type, location: fenceAnnotation)
-            self.parkingLotMap.addAnnotation(toiletsAnnotation as MKAnnotation)
-        }
-    }
-    
+
     func addDifferentAnnotation(parkingDuration: Int){
         //This function allow to show different annotation by filter. Based on the parking duration such as 2P, 4P.
         for index in 0..<smart.count{
@@ -153,12 +135,12 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
     @objc func showAll(){
         // the "Show all" button can show all the annotation on map.
         removeAnnotation()
-        addAnnotation()
+        retrieveData()
     }
     
     func retrieveData(){
         var smartParking = [ParkingBay]()
- 
+        var park = [ParkingLot]()
         let url = "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json?$select=bay_id,%20lat,%20lon,status,st_marker_id"
         guard let jsonUrl = URL(string: url) else {return}
         
@@ -179,8 +161,8 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                     smartParking.append(theParkingBay)
                     let bay = Int64(bayid)
                     let parking = self.parking.filter{$0.bayId == bay}
-                    self.smart.append(contentsOf: parking)
-                    self.smart = self.smart.sorted {$0.bayId! < $1.bayId!}
+                    park.append(contentsOf: parking)
+                    park = park.sorted {$0.bayId! < $1.bayId!}
                 }
                 
                 for i in self.markers{
@@ -188,7 +170,18 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                     self.p.append(contentsOf: smartParkings)
                     self.p = self.p.sorted {$0.bay_id < $1.bay_id}
                 }
-
+                DispatchQueue.main.async {
+                    for index in 0..<park.count{
+                        let latitude = park[index].latitude!
+                        let longitude = park[index].longitude!
+                        let status = self.p[index].status
+                        let type = park[index].parkingDuration!
+                        let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
+                        let toiletsAnnotation = Annotation(newTitle: status, subtitle: "Parking Duration: " + type, location: fenceAnnotation)
+                        self.parkingLotMap.addAnnotation(toiletsAnnotation as MKAnnotation)
+                    }
+                    self.smart = park
+                }
             }catch {
                 print(error.localizedDescription)
             }
@@ -238,9 +231,6 @@ extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDa
         case "4PSign":
             removeAnnotation()
             addDifferentAnnotation(parkingDuration: 240)
-        case "AllDay":
-            removeAnnotation()
-            addDifferentAnnotation(parkingDuration: 1440)
         default: break
         }
     }

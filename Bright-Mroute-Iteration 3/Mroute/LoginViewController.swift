@@ -4,37 +4,43 @@
 //
 //  Created by Zhongheng Hu on 7/5/19.
 //  Copyright © 2019 Zhongheng Hu. All rights reserved.
-//
+// This page handle the login function for user.
 
 import UIKit
 import Firebase
+import MapKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var backgroundImage: UIImageView!
-    
+    var locationManager: CLLocationManager = CLLocationManager()
     var handle: AuthStateDidChangeListenerHandle?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.changeButton()
+        self.locationManager.requestAlwaysAuthorization() // request user's location
+        self.locationManager.requestWhenInUseAuthorization()
+        loginButton.changeButton() // change button type.
         signUpButton.changeButton()
         emailTextField.delegate = self
         passwordTextField.delegate = self
-//        let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
-//        let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
-//        //view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)
-
-        // Do any additional setup after loading the view.
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser != nil {
+            self.performSegue(withIdentifier: "loginSegue", sender: self) // if loggin succeed, go to another page.
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-         backgroundImage.loadGif(name: "background")
+        DispatchQueue.main.async {
+            self.backgroundImage.loadGif(name: "background") // change the background of the application into a Gif.
+        }
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
             if user != nil{
             }
@@ -63,7 +69,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 print(error?.localizedDescription)
                 self.displayMessage(error!.localizedDescription, "Error")
             } else {
-                self.performSegue(withIdentifier: "loginSegue", sender: self)
+                self.performSegue(withIdentifier: "loginSegue", sender: self) //login succesfully
             }
         }
     }
@@ -76,17 +82,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        //dismiss the keyboard.
         return true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        //dismiss the keyboard.
     }
     
 }
 
 extension UIButton {
-    func changeButton(){
+    func changeButton(){ //change the button type.
         self.layer.cornerRadius = 15
         self.layer.shadowColor = UIColor.darkGray.cgColor
         self.layer.shadowRadius = 5

@@ -22,7 +22,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var zoneName: String?
     var speedArea: String?
     var detail: String?
-    var frequency: Int?
+    var frequency: String?
     var criticalLevel: String?
     var locationLatitude: Double?
     var locationLongitude: Double?
@@ -72,7 +72,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.zoneMap.userLocation.title = "Your Current Location"
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingLocation()
             centerMapOnLocation(location: initialLocation)
         }else{
             print("error")
@@ -112,9 +112,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let longitude = data.longitude!
             let name = data.title!
             let speedZone = "Speed Zone: " + data.speedZone!
+            let level = data.criticalLevel!
             let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
-            let toiletsAnnotation = Annotation(newTitle: name, subtitle: speedZone, location: fenceAnnotation)
-            self.zoneMap.addAnnotation(toiletsAnnotation as MKAnnotation)
+            let proneAnnotation = Annotation(newTitle: name, subtitle: speedZone, location: fenceAnnotation)
+            proneAnnotation.imageName = level
+            self.zoneMap.addAnnotation(proneAnnotation as MKAnnotation)
         }
     }
     
@@ -156,11 +158,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let resizedSize = CGSize(width: 10, height: 10)
         UIGraphicsBeginImageContext(resizedSize)
         
+        let cpa = annotation as! Annotation
         // if statement to determine pin's images depends the types.
         if annotation.subtitle == "Hook Turn" {
             annotationView.image = UIImage(named: "hook")
         }else{
-            annotationView.image = UIImage(named: "zone")
+            annotationView.image = UIImage(named: cpa.imageName!)
         }
         
         annotationView.canShowCallout = true

@@ -28,7 +28,7 @@ class ZoneDetailViewController: UIViewController, CLLocationManagerDelegate {
     var latitude: Double?
     var longitude : Double?
     var critical: String?
-    var frequency: Int?
+    var frequency: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +73,7 @@ class ZoneDetailViewController: UIViewController, CLLocationManagerDelegate {
             titleLabel.text = "Prone Zone Detail"
             nameLabel.text = "Road Type: " + name!
             criticalLabel.text = "Critical Level: " + critical!
-            frequencyLabel.text = "Accident Happened Frequency: " + "\(frequency!) Times"
+            frequencyLabel.text = "Accident Happened Frequency:\n" + frequency!
             typeLabel.text = speedZone!
             instructionLabel.text = ""
         }

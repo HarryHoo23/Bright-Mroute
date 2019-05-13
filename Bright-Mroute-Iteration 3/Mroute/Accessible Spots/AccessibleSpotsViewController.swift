@@ -12,6 +12,11 @@ import UIKit
 import MapKit
 import Firebase
 
+struct FenceAnnotation {
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
+}
 class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     
@@ -21,8 +26,8 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
     var imageArray = ["Information Center" ,
                       "Toilet",
                       "Park",
-                      "Office",
-                      "Gas"]
+                      "Petrol Station",
+                      "Sports"]
     // the arrayList of image, stored including the facility's names.
     var locationManager: CLLocationManager = CLLocationManager()
     var facility = [Facility]()
@@ -34,7 +39,6 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(facility.count)
         self.collectionView.delegate = self // state the delegate of collection view in order to show pictures.
         self.collectionView.dataSource = self
         collectionView.backgroundColor = UIColor(displayP3Red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
@@ -49,7 +53,7 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
         addDifferentAnnotation(assetType: "Information Facilities") // show the initial annotations when user first time loaded the map.
         if CLLocationManager.locationServicesEnabled(){
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingLocation()
             self.acMap.showsUserLocation = true
             self.acMap.userLocation.title = "Your Current Location"
            // centerViewOnUserLocation()
@@ -71,29 +75,17 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
     }
     
     // add annotaions from facility array.
-    func addAnnotation(){
-        for data in facility {
-            let latitude = data.latitude!
-            let longitude = data.longitude!
-            let name = data.name!
-            let type = data.assetType!
-            let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
-            let toiletsAnnotation = Annotation(newTitle: name, subtitle: type, location: fenceAnnotation)
-            self.acMap.addAnnotation(toiletsAnnotation as MKAnnotation) // put annotations on map
-            self.acMap.delegate = self
-        }
-    }
-    
     func addDifferentAnnotation(assetType: String){
         for data in facility {
             if data.assetType == assetType {
                 let latitude = data.latitude!
                 let longitude = data.longitude!
                 let name = data.name!
+                
+                //let location = CLLocation(latitude: latitude, longitude: longitude)
                 let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
                 let toiletsAnnotation = Annotation(newTitle: name, subtitle: assetType, location: fenceAnnotation)
-                self.acMap.addAnnotation(toiletsAnnotation as MKAnnotation)
-                self.acMap.delegate = self
+                self.acMap.addAnnotation(toiletsAnnotation as MKAnnotation) // put annotations on map
             }
         }
     }
@@ -112,6 +104,8 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
         UIGraphicsBeginImageContext(resizedSize)
         
         // switch case by annotation's asset type name.
+        let fef = annotation.subtitle!
+        
         switch annotation.subtitle {
         case "Information Facilities":
             annotationView.image = UIImage(named: "green")
@@ -119,7 +113,7 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
             annotationView.image = UIImage(named: "sport")
         case "Park Facilities":
             annotationView.image = UIImage(named: "parkingLot")
-        case "Leased Facilities":
+        case "Sports Facilities":
             annotationView.image = UIImage(named: "hook")
         default:
             annotationView.image = UIImage(named: "zone")
@@ -130,6 +124,11 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
                                                 size: CGSize(width: 40, height: 40)))
         mapsButton.setBackgroundImage(UIImage(named: "mapkit"), for: UIControl.State())
         annotationView.rightCalloutAccessoryView = mapsButton
+        let detailLabel = UILabel()
+        detailLabel.numberOfLines = 0
+        detailLabel.font = detailLabel.font.withSize(12)
+        detailLabel.text = annotation.subtitle!
+        annotationView.detailCalloutAccessoryView = detailLabel
         // allow user to tap the annotations
         return annotationView
     }
@@ -141,8 +140,6 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
         location.mapItem().openInMaps(launchOptions: launchOptions)
         // after tap the annotation can jump to the map to launch navigation.
     }
-    
-    
 }
 
 extension AccessibleSpotsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -179,13 +176,15 @@ extension AccessibleSpotsViewController: UICollectionViewDelegate, UICollectionV
         case "Park":
             removeAnnotation()
             addDifferentAnnotation(assetType: "Park Facilities")
-        case "Office":
+        case "Sports":
             removeAnnotation()
-            addDifferentAnnotation(assetType: "Leased Facilities")
+            addDifferentAnnotation(assetType: "Sports Facilities")
+        case "Petrol Station":
+            removeAnnotation()
+            addDifferentAnnotation(assetType: "Petrol Station")
         default:
             break
         }
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -19,9 +19,9 @@ class ProneZone: NSObject{
     var latitude: Double?
     var speedZone: String?
     var criticalLevel: String?
-    var frequency: Int?
+    var frequency: String?
     
-    init(title: String, longtitude: Double, latitude: Double, speed: String, critical: String, frequency: Int){
+    init(title: String, longtitude: Double, latitude: Double, speed: String, critical: String, frequency: String){
         self.title = title
         self.longitude = longtitude
         self.latitude = latitude

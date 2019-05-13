@@ -30,6 +30,10 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     var prones = [ProneZone]() // create the array of pronezone, saved as object.
     var hookTurn = [HookTurn]() // create the array of hookturn, saved as object.
     var quizArray = [Question]()
+    
+    var autoQuizArray = [Question]() // create the array of car quiz
+    var bikeQuizArray = [Question]() // create the array of bike quiz
+    
     var parking = [ParkingLot]()
     var roadAssistance = [provider]()
     var marker = [String]()
@@ -41,6 +45,7 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     var condition: String!
     var city : String!
     var imageUrl : String!
+    var quizType: String?
     
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -52,45 +57,84 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addFacility()
-        addProneZone()
-        addHookTurn()
-        addParkingLot()
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
         let image = UIImage(named: "phone")
         let location = locationManager.location
-        longitude = location?.coordinate.longitude
-        latidude = location?.coordinate.latitude
-        self.ref = Database.database().reference().child("RoadAssistance")
-        let yellowColor = UIColor(red: 255/255, green: 255/255, blue: 126/255, alpha: 1)
-        let orangeColor = UIColor(red: 255/255, green: 255/255, blue: 204/255, alpha: 1)
-        let lightOrangeColor = UIColor(red: 252/255, green: 214/255, blue: 112/255, alpha: 1)
-        view.setGradientBackgroundColor(colorOne: lightOrangeColor, colorTwo: yellowColor)
-        weatherView.backgroundColor = orangeColor
-        weatherView.layer.cornerRadius = 20
+        longitude = location?.coordinate.longitude // read user's current location
+        latidude = location?.coordinate.latitude // read user's current location
+        self.ref = Database.database().reference().child("RoadAssistance") // retrieve data from firebase.
+        let yellowColor = UIColor(red: 255/255, green: 255/255, blue: 221/255, alpha: 0.8) // create two different color.
+        let lightOrangeColor = UIColor(red: 255/255, green: 228/255, blue: 192/255, alpha: 1)
+        view.setGradientBackgroundColor(colorOne: lightOrangeColor, colorTwo: yellowColor) // set the background color.
+        weatherView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        weatherView.layer.cornerRadius = 20 // change the corner radius.
+        weatherView.layer.borderWidth = 2 //add a border in weather view.
+        weatherView.layer.borderColor = lightOrangeColor.cgColor
+        
         let phoneButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(tapButton))
         self.navigationItem.rightBarButtonItem = phoneButton
-        getWeather()
-        addUserName()
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+        getWeather() // retrieve weather api.
+        addUserName() // Get userName
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addQuestion()
+        // retrieve all the data into phone.
+        addFacility()
+        addProneZone()
+        addHookTurn()
+        addParkingLot()
         saveRoadAssistance()
-        //let userID = Auth.auth().currentUser!.uid
-
+        addQuestion()
+        addBikeQuiz()
     }
     
-    func addUserName(){
-        let uid = Auth.auth().currentUser?.uid
-        Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                let name = dictionary["firstName"] as? String
-                self.welcomeLabel.text = "Welcome " + name! + "!"
+    @IBAction func showQuiz(_ sender: Any) { // When user click quiz, should show two options.
+        let alertController = UIAlertController(title: "Choose Your Quiz Type", message: nil, preferredStyle: .actionSheet)
+        let autoMobile = UIAlertAction(title: "Car", style: .default) { (action) in //if user choose car option, do the action.
+            self.quizArray.removeAll()
+            self.quizType = "auto"
+            self.addQuestion()
+            self.quizArray = self.autoQuizArray
+            print(self.quizArray.count)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showQuiz", sender: nil)
             }
-        })
+        }
+        
+        let bikeQuiz = UIAlertAction(title: "Bicycle", style: .default) { (action) in //if user choose bike option, do the action.
+            self.quizArray.removeAll()
+            self.quizType = "bike"
+            self.addBikeQuiz()
+            self.quizArray = self.bikeQuizArray
+            print(self.quizArray.count)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showQuiz", sender: nil)
+                
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(autoMobile)
+        alertController.addAction(bikeQuiz)
+        alertController.addAction(cancel)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func addUserName(){ // retrieve current user name.
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if let user = user {
+                let uid = Auth.auth().currentUser?.uid
+                Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+                    if let dictionary = snapshot.value as? [String: AnyObject] {
+                        let name = dictionary["firstName"] as? String
+                        let last = dictionary["lastName"] as? String
+                        self.welcomeLabel.text = "Welcome " + name! + " " + last! + "!"
+                    }
+                })
+            } else {
+                print("Not logged in")
+            }
+        }
     }
     // add facility data into facility arraylist.
     func addFacility(){
@@ -101,9 +145,9 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
             if snapshot.childrenCount > 0 || snapshot.childrenCount == 0 {
                 for data in snapshot.children.allObjects as! [DataSnapshot]{
                     let object = data.value as? [String: AnyObject]
-                    let name = object?["Address"] as! String
                     let long = object?["Longitude"] as! Double
                     let lat = object?["Latitude"] as! Double
+                    let name = object?["Asset Name"] as! String
                     let type = object?["Asset Type"] as! String
                     let theFacility = Facility(name: name, type: type, longitude: long, latitude: lat)
                     // create a new object, saved all attributes as init.
@@ -145,8 +189,8 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
                     let long = object?["LONGITUDE"] as! Double
                     let lat = object?["LATITUDE"] as! Double
                     let speed = object?["SPEED_ZONE"] as! String
-                    let critical = object?["Critical Level"] as! String
-                    let frequency = object?["Frequency"] as! Int
+                    let critical = object?["CRITICAL_LEVEL"] as! String
+                    let frequency = object?["ACCIDENT_FREQUENCY"] as! String
                     let prone1 = ProneZone(title: name, longtitude: long, latitude: lat, speed: speed, critical: critical, frequency: frequency)
                     proneZone.append(prone1)
                 }
@@ -155,12 +199,11 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         })
     }
     
+    //add quiz question from database.
     func addQuestion(){
-        var newQuiz = [Question]()
         var correctAnswer: Int = 0
-        let ref2 = Database.database().reference().child("Quiz")
+        let ref2 = Database.database().reference().child("Quiz") // this is the car quiz
         ref2.observe(.value , with: { snapshot in
-            if snapshot.childrenCount > 0 || snapshot.childrenCount == 0 {
                 for data in snapshot.children.allObjects as! [DataSnapshot]{
                     let object = data.value as? [String: AnyObject]
                     let question = object?["Question"] as! String
@@ -184,11 +227,41 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
                         break
                     }
                     let quiz = Question(questionText: question, choiceA: "A. " + choiceA, choiceB: "B. " + choiceB, choiceC: "C. " + choiceC, choiceD: "D. " + choiceD, answer: correctAnswer, qNumber: number, qDescription: description)
-                    newQuiz.append(quiz)
+                    self.autoQuizArray.append(quiz)
                 }
+        })
+    }
+    
+    
+    func addBikeQuiz(){ //Same as car quiz, but this function is adding bike quiz, just to differentiate.
+        var correctAnswer: Int = 0
+        let ref2 = Database.database().reference().child("BikeQuiz")
+        ref2.observe(.value , with: { snapshot in
+            for data in snapshot.children.allObjects as! [DataSnapshot]{
+                let object = data.value as? [String: AnyObject]
+                let question = object?["Question"] as! String
+                let choiceA = object?["Option A"] as! String
+                let choiceB = object?["Option B"] as! String
+                let choiceC = object?["Option C"] as! String
+                let choiceD = object?["Option D"] as! String
+                let answer = object?["Answer"] as! String
+                let number = object?["No"] as! Int
+                let description = object?["Description"] as! String
+                switch answer {
+                case "A" :
+                    correctAnswer = 0
+                case "B":
+                    correctAnswer = 1
+                case "C":
+                    correctAnswer = 2
+                case "D":
+                    correctAnswer = 3
+                default:
+                    break
+                }
+                let quiz = Question(questionText: question, choiceA: "A. " + choiceA, choiceB: "B. " + choiceB, choiceC: "C. " + choiceC, choiceD: "D. " + choiceD, answer: correctAnswer, qNumber: number, qDescription: description)
+                self.bikeQuizArray.append(quiz)
             }
-            self.quizArray = newQuiz
-            //print(self.quizArray.count)
         })
     }
     //This function is going to add the parkinglot information
@@ -233,6 +306,7 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         if segue.destination is RulesViewController{
             let rc = segue.destination as? RulesViewController
             rc?.questions = self.quizArray
+            rc?.type = self.quizType
         }
         
         if segue.destination is ParkingLotViewController{
@@ -250,7 +324,7 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
 
 extension DashBoardViewController {
     
-    func saveRoadAssistance(){
+    func saveRoadAssistance(){ // retrieve data from database to load the road assistance providers.
         self.ref.observe(.value, with: { (snapshot) in
             for data in snapshot.children.allObjects as! [DataSnapshot]{
                 let object = data.value as? [String : AnyObject]
@@ -259,7 +333,7 @@ extension DashBoardViewController {
                 let assistance = provider(providerName: name, phone: phone)
                 self.roadAssistance.append(assistance)
             }
-            let uid = Auth.auth().currentUser?.uid
+            let uid = Auth.auth().currentUser?.uid // get current user id
             Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.providerName = dictionary["roadAssistance"] as? String
@@ -273,10 +347,16 @@ extension DashBoardViewController {
         })
     }
     
-    func getWeather(){
-        let url = "http://api.apixu.com/v1/current.json?key=b7d3f33abecc4920a1d43056191005&q=" + "\(latidude!)," + "\(longitude!)"
+    func getWeather(){ // weather api.
+        var url: String
+        if latidude != nil && longitude != nil { //if user not allow the location ability.
+             url = "http://api.apixu.com/v1/current.json?key=b7d3f33abecc4920a1d43056191005&q=" + "\(latidude!)," + "\(longitude!)"
+        } else {
+            url = "http://api.apixu.com/v1/current.json?key=b7d3f33abecc4920a1d43056191005&q=-37.814,144.96332"
+        }
+
         guard let jsonUrl = URL(string: url) else {return}
-        URLSession.shared.dataTask(with: jsonUrl) {(data, response, error) in
+        URLSession.shared.dataTask(with: jsonUrl) {(data, response, error) in // get json data from web api.
             if error == nil {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String : AnyObject]
@@ -305,13 +385,11 @@ extension DashBoardViewController {
                     print(error.localizedDescription)
                 }
             }
-            
-            
         }.resume()
     }
 }
 
-extension UIImageView {
+extension UIImageView { //Get download url to load image.
     func download(from url : String){
         let urlRequest = URLRequest(url: URL(string: url)!)
         

@@ -44,10 +44,17 @@ class RulesViewController: UIViewController {
     var score: Int = 0
     var buttonsArray = [UIButton]()
     var picture = [String]()
+    var type: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        print(questions.count)
+        randomQuestions()
+        if resultArray.count != 0 {
+            restartQuiz()
+            updateProgress()
+        }
+        
         let blueColor = UIColor(red: 137/255, green: 196/255, blue: 244/255, alpha: 1)
         let grayColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
         view.setGradientBackgroundColor(colorOne: blueColor, colorTwo: grayColor)// the background image of this view Controller
@@ -56,16 +63,11 @@ class RulesViewController: UIViewController {
         optionB.applyButton()
         optionC.applyButton()
         optionD.applyButton()
-        
         buttonsArray = [optionA, optionB, optionC, optionD] // set the button into an array.
-        if resultArray.count != 0 {
-            restartQuiz()
-            updateProgress()
-        }
+        
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path)
-        
         for data in items {
             if data.hasSuffix("gif") {
                 picture.append(data)
@@ -76,8 +78,6 @@ class RulesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
-        randomQuestions()
-        viewDidLoad()
     }
     
     @IBAction func answerPress(_ sender: UIButton) {
@@ -88,7 +88,7 @@ class RulesViewController: UIViewController {
         self.view.addSubview(popVc.view) // add the view to the view controller to show.
         popVc.didMove(toParent: self)
         //show the popUp window to show the answer.
-        if picture.contains("\(resultArray[questionNumber].number)dong.gif") {
+        if picture.contains("\(resultArray[questionNumber].number)\(type!).gif") {
             print("Yes")
             popVc.descriptionLabel.text = ruleDescription
         } else {
@@ -113,7 +113,7 @@ class RulesViewController: UIViewController {
             score += 1
             popVc.answerLabel.text = "You are Correct!!"
             popVc.answerLabel.textColor = UIColor(red: 50/255, green: 205/255, blue: 50/255, alpha: 1)
-            popVc.descriptionImage.loadGif(name: "\(resultArray[questionNumber].number)dong")
+            popVc.descriptionImage.loadGif(name: "\(resultArray[questionNumber].number)\(type!)")
             optionA.isEnabled = false
             optionB.isEnabled = false
             optionC.isEnabled = false
@@ -121,7 +121,7 @@ class RulesViewController: UIViewController {
         } else {
             popVc.answerLabel.text = "You are Wrong! The Answer is:  \(buttonsArray[selectedAnswer].currentTitle!)"
             popVc.answerLabel.textColor = UIColor.red
-            popVc.descriptionImage.loadGif(name: "\(resultArray[questionNumber].number)dong")
+            popVc.descriptionImage.loadGif(name: "\(resultArray[questionNumber].number)\(type!)")
             //buttonsArray[questions[questionNumber].correctAnswer].backgroundColor = UIColor(red: 17/255, green: 220/255, blue: 5/255, alpha: 0.2)
             buttonsArray[sender.tag].backgroundColor = UIColor(red: 255/255, green: 32/255, blue: 25/255, alpha: 0.2)
             optionA.isEnabled = false
@@ -144,7 +144,7 @@ class RulesViewController: UIViewController {
             optionD.setTitle(resultArray[questionNumber].optionD, for: UIControl.State.normal)
             selectedAnswer = resultArray[questionNumber].correctAnswer
             ruleDescription = resultArray[questionNumber].questiondescription
-            questionImage.image = UIImage(named: "\(resultArray[questionNumber].number)") //show image based on question number
+            questionImage.image = UIImage(named: "\(resultArray[questionNumber].number)\(type!)") //show image based on question number
         } else {
             self.performSegue(withIdentifier: "showScore", sender: self)
             //self.performSegue(withIdentifier: "showScore", sender: self)

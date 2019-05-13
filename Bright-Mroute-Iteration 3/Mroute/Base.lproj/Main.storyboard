@@ -559,7 +559,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuC-8S-GJX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2157.5999999999999" y="868.9655172413793"/>
+            <point key="canvasLocation" x="826" y="2191"/>
         </scene>
         <!--Parking Lot-->
         <scene sceneID="zuI-KS-Slh">
@@ -651,6 +651,37 @@
             </objects>
             <point key="canvasLocation" x="2877.5999999999999" y="616.99507389162568"/>
         </scene>
+        <!--Cyclist-->
+        <scene sceneID="hKB-EB-lau">
+            <objects>
+                <viewController title="Cyclist" modalTransitionStyle="crossDissolve" hidesBottomBarWhenPushed="YES" id="8jB-yW-LqN" customClass="BikeShareViewController" customModule="Mroute" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jyq-BM-Xiy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T8S-dX-5N8">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fmD-Yq-e1t" firstAttribute="trailing" secondItem="T8S-dX-5N8" secondAttribute="trailing" id="O2F-LA-ufB"/>
+                            <constraint firstAttribute="bottom" secondItem="T8S-dX-5N8" secondAttribute="bottom" id="XUx-yX-vyh"/>
+                            <constraint firstItem="T8S-dX-5N8" firstAttribute="top" secondItem="fmD-Yq-e1t" secondAttribute="top" id="cql-fE-0ol"/>
+                            <constraint firstItem="T8S-dX-5N8" firstAttribute="leading" secondItem="fmD-Yq-e1t" secondAttribute="leading" id="zd8-Ns-FmW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fmD-Yq-e1t"/>
+                    </view>
+                    <connections>
+                        <outlet property="bikeLabel" destination="0Jb-pH-0bL" id="Wrg-N1-7OS"/>
+                        <outlet property="bikeStationMap" destination="T8S-dX-5N8" id="uHL-xI-hLY"/>
+                        <outlet property="infoLabel" destination="KtO-lf-duI" id="lLb-nx-jgJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iqL-Vy-ZbL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1399" y="823"/>
+        </scene>
         <!--Bright Mroute-->
         <scene sceneID="yaf-0g-F7I">
             <objects>
@@ -660,25 +691,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Pf-Hw-Qq7">
-                                <rect key="frame" x="209" y="308" width="150" height="135"/>
+                                <rect key="frame" x="192" y="276" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="pronezone"/>
+                                <state key="normal" title="Button" image="accident"/>
                                 <connections>
                                     <segue destination="pdM-yl-gCF" kind="show" id="og0-HR-ggX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeC-ev-mG3">
-                                <rect key="frame" x="201" y="594" width="150" height="135"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="emergency"/>
-                                <connections>
-                                    <segue destination="Ucr-aj-zDe" kind="show" id="WdU-fK-yEC"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2W-Uq-7nR">
-                                <rect key="frame" x="209" y="451" width="150" height="135"/>
+                                <rect key="frame" x="192" y="424" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="parking"/>
+                                <state key="normal" title="Button" image="my parking"/>
                                 <connections>
                                     <segue destination="koD-7b-E5o" kind="show" id="H3U-Zz-6lX"/>
                                 </connections>
@@ -716,11 +739,11 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPN-Sc-BLD">
-                                <rect key="frame" x="16" y="308" width="150" height="135"/>
+                                <rect key="frame" x="34" y="276" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="rules"/>
+                                <state key="normal" title="Button" image="quiz"/>
                                 <connections>
-                                    <segue destination="8ly-hw-Zpz" kind="show" id="OWO-GC-Yhw"/>
+                                    <action selector="showQuiz:" destination="jIA-o6-vcy" eventType="touchUpInside" id="h9A-PD-951"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome, Ganesh!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jjf-iE-R35">
@@ -733,11 +756,27 @@
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bn3-ZH-Qfn">
-                                <rect key="frame" x="16" y="451" width="150" height="135"/>
+                                <rect key="frame" x="34" y="424" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="accessible"/>
+                                <state key="normal" image="accessible-1"/>
                                 <connections>
                                     <segue destination="6po-ic-Jsg" kind="show" id="ttL-TW-YeO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WAu-LG-Gz5">
+                                <rect key="frame" x="34" y="572" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="cycling"/>
+                                <connections>
+                                    <segue destination="uYh-uM-9Yq" kind="show" id="6Wv-XS-VHI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeC-ev-mG3">
+                                <rect key="frame" x="192" y="572" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="CBD parking"/>
+                                <connections>
+                                    <segue destination="Ucr-aj-zDe" kind="show" id="WdU-fK-yEC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -756,6 +795,7 @@
                         <outlet property="weatherImageView" destination="mHg-v7-wsG" id="1fD-ni-hkf"/>
                         <outlet property="weatherView" destination="RQD-IR-aDK" id="V6h-Ii-2jm"/>
                         <outlet property="welcomeLabel" destination="Jjf-iE-R35" id="ZZZ-S4-rAy"/>
+                        <segue destination="8ly-hw-Zpz" kind="show" identifier="showQuiz" id="Hx1-uu-sVt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QSR-6l-X1e" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -841,12 +881,15 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1W-Ul-Y8R">
-                                <rect key="frame" x="227" y="452" width="117" height="30"/>
+                                <rect key="frame" x="206" y="452" width="138" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ycj-8a-YDC"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Forgot Pasword?"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="Forgot Pasword?">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="15"/>
                                 </userDefinedRuntimeAttributes>
@@ -871,7 +914,7 @@
                             <constraint firstItem="5q9-eU-BUz" firstAttribute="top" secondItem="f1W-Ul-Y8R" secondAttribute="bottom" constant="43" id="FXP-n0-5vk"/>
                             <constraint firstItem="fMi-17-Ixp" firstAttribute="bottom" secondItem="5q9-eU-BUz" secondAttribute="bottom" constant="213" id="IdD-uX-1eD"/>
                             <constraint firstItem="WsE-GY-EUf" firstAttribute="leading" secondItem="Bei-uA-iP1" secondAttribute="leading" id="Qbz-nS-4M5"/>
-                            <constraint firstItem="f1W-Ul-Y8R" firstAttribute="leading" secondItem="fMi-17-Ixp" secondAttribute="leading" constant="227" id="fnX-sj-gjC"/>
+                            <constraint firstItem="f1W-Ul-Y8R" firstAttribute="leading" secondItem="fMi-17-Ixp" secondAttribute="leading" constant="206" id="fnX-sj-gjC"/>
                             <constraint firstItem="QQy-vi-CB2" firstAttribute="trailing" secondItem="c2M-wt-NPG" secondAttribute="trailing" id="g8B-um-yXT"/>
                             <constraint firstItem="7fd-bJ-6O9" firstAttribute="leading" secondItem="fMi-17-Ixp" secondAttribute="leading" constant="31" id="gXp-2p-6FK"/>
                             <constraint firstItem="f1W-Ul-Y8R" firstAttribute="top" secondItem="c2M-wt-NPG" secondAttribute="bottom" constant="8" id="jJj-OA-q4X"/>
@@ -896,7 +939,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ns6-0c-He2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2143.1999999999998" y="354.67980295566502"/>
+            <point key="canvasLocation" x="-2751.1999999999998" y="354.67980295566502"/>
         </scene>
         <!--Reset Password-->
         <scene sceneID="gYC-ZY-u5t">
@@ -954,7 +997,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BoF-2c-xW9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-477.60000000000002" y="1100.2463054187192"/>
+            <point key="canvasLocation" x="-2143" y="2191"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ZL9-yB-JPQ">
@@ -972,7 +1015,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mih-gd-gEr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1020" y="355"/>
+            <point key="canvasLocation" x="-1590" y="355"/>
         </scene>
         <!--Map-->
         <scene sceneID="vvk-Pf-tIO">
@@ -982,7 +1025,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="W34-nf-KiD">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W34-nf-KiD">
                                 <rect key="frame" x="0.0" y="116" width="375" height="696"/>
                             </mapView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SgM-uj-GfV">
@@ -1032,7 +1075,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WT9-10-aIR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3607.1999999999998" y="-32.512315270935964"/>
+            <point key="canvasLocation" x="2246" y="1315"/>
         </scene>
         <!--Prone Zone Detail-->
         <scene sceneID="O78-JE-F8L">
@@ -1098,13 +1141,13 @@
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCU-ro-Zy4">
                                                 <rect key="frame" x="0.0" y="194" width="414" height="60"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNr-5L-3KE">
                                                 <rect key="frame" x="0.0" y="400" width="414" height="90"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1208,7 +1251,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5dh-WW-1qh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1020" y="-151"/>
+            <point key="canvasLocation" x="-569" y="392"/>
         </scene>
         <!--Accessible Spots-->
         <scene sceneID="KgX-F4-JQQ">
@@ -1372,6 +1415,9 @@
                                     <constraint firstItem="dWB-Cd-iGM" firstAttribute="centerX" secondItem="k0q-ol-x44" secondAttribute="centerX" id="vAm-wv-YCV"/>
                                     <constraint firstAttribute="width" constant="343" id="yLS-cL-FU6"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="15"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9k-zK-nl1">
                                 <rect key="frame" x="30" y="146" width="315" height="97"/>
@@ -1790,12 +1836,167 @@
                         <outlet property="profileImage" destination="ZmH-j3-wbp" id="9NV-9T-waO"/>
                         <outlet property="repeatPasswordTextField" destination="Wtx-14-Bet" id="OVV-DI-B8m"/>
                         <outlet property="roadAssistancePickerTextField" destination="lQG-hk-TKK" id="nfa-kk-d29"/>
+                        <outlet property="scrollView" destination="wxw-GK-1Pa" id="UCN-iK-C7b"/>
                         <outlet property="signButton" destination="rbz-Qz-s2o" id="0ks-cH-Ih3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0js-8X-r0M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-324.80000000000001" y="-552.70935960591135"/>
+        </scene>
+        <!--Bicycle Route-->
+        <scene sceneID="NfU-pL-1QN">
+            <objects>
+                <viewController title="Bicycle Route" hidesBottomBarWhenPushed="YES" id="uYh-uM-9Yq" customClass="CyclistsViewController" customModule="Mroute" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ofY-ae-HwX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bike Route in Melbourne" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Jb-pH-0bL">
+                                <rect key="frame" x="0.0" y="88" width="375" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.89945419520000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="icW-3T-5ef">
+                                <rect key="frame" x="0.0" y="159" width="375" height="415"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="routeIdentifier" editingAccessoryType="detailButton" rowHeight="122" id="Bik-6G-jQ6" customClass="RouteTableViewCell" customModule="Mroute" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="122"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bik-6G-jQ6" id="b2D-2V-F4s">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="121.66666666666667"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZET-qe-0Br">
+                                                    <rect key="frame" x="0.0" y="0.0" width="118" height="121.66666666666667"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="118" id="ALf-ZM-o9s"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="great ocean road jofsd jiofjow jidfjw jisfw" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkT-am-HzY">
+                                                    <rect key="frame" x="127" y="0.0" width="207" height="121.66666666666667"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MkT-am-HzY" firstAttribute="top" secondItem="b2D-2V-F4s" secondAttribute="topMargin" constant="-11" id="0GO-j5-KiD"/>
+                                                <constraint firstItem="MkT-am-HzY" firstAttribute="leading" secondItem="ZET-qe-0Br" secondAttribute="trailing" constant="9" id="60V-jO-rb8"/>
+                                                <constraint firstItem="MkT-am-HzY" firstAttribute="trailing" secondItem="b2D-2V-F4s" secondAttribute="trailingMargin" id="BTK-xL-22b"/>
+                                                <constraint firstItem="ZET-qe-0Br" firstAttribute="centerY" secondItem="b2D-2V-F4s" secondAttribute="centerY" id="Cvr-FR-q7e"/>
+                                                <constraint firstItem="ZET-qe-0Br" firstAttribute="centerY" secondItem="MkT-am-HzY" secondAttribute="centerY" id="DXx-Bx-6bp"/>
+                                                <constraint firstItem="ZET-qe-0Br" firstAttribute="top" secondItem="b2D-2V-F4s" secondAttribute="top" id="Yat-sq-bNt"/>
+                                                <constraint firstItem="ZET-qe-0Br" firstAttribute="leading" secondItem="b2D-2V-F4s" secondAttribute="leading" id="tIf-Pr-cxE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="routeImage" destination="ZET-qe-0Br" id="hS8-F2-Yss"/>
+                                            <outlet property="routeInformationlabel" destination="MkT-am-HzY" id="OTJ-20-mwB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Bike?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KtO-lf-duI">
+                                <rect key="frame" x="8" y="582" width="359" height="79"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nqf-M8-UAr">
+                                <rect key="frame" x="98" y="689" width="178" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.53772075610000003" blue="1" alpha="0.94662350169999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Bike Share">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="15"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="bikeShare:" destination="8jB-yW-LqN" eventType="touchUpInside" id="c0p-qa-NTQ"/>
+                                    <segue destination="8jB-yW-LqN" kind="show" id="DQP-pJ-PRX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="5V2-oL-OaZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="infoLabel" destination="KtO-lf-duI" id="ggY-go-xdk"/>
+                        <outlet property="routeTableView" destination="icW-3T-5ef" id="J6H-Pu-2Xa"/>
+                        <segue destination="NL8-vE-Mzi" kind="show" identifier="showDetail" id="dpT-0R-q5w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2dj-Db-nbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="429.60000000000002" y="-373.15270935960592"/>
+        </scene>
+        <!--Route Detail-->
+        <scene sceneID="mbR-hO-gON">
+            <objects>
+                <viewController title="Route Detail" hidesBottomBarWhenPushed="YES" id="NL8-vE-Mzi" customClass="RouteDetailViewController" customModule="Mroute" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rGp-Yz-S3u">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dandenong" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBr-r7-tq5">
+                                <rect key="frame" x="16" y="96" width="343" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEK-yh-ITk">
+                                <rect key="frame" x="16" y="162" width="343" height="96"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CSi-xj-t6J">
+                                <rect key="frame" x="16" y="266" width="343" height="190"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4y-fH-Ngs">
+                                <rect key="frame" x="123" y="727" width="128" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Navigate">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="15"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="navigateInWeb:" destination="NL8-vE-Mzi" eventType="touchUpInside" id="vpm-de-3G0"/>
+                                </connections>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B9A-we-akF">
+                                <rect key="frame" x="16" y="464" width="343" height="255"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="a4p-gY-fhm"/>
+                    </view>
+                    <connections>
+                        <outlet property="detail" destination="sEK-yh-ITk" id="r2J-n2-JLL"/>
+                        <outlet property="image" destination="CSi-xj-t6J" id="9us-CY-iN4"/>
+                        <outlet property="nameLabel" destination="xBr-r7-tq5" id="xf2-Of-Sgp"/>
+                        <outlet property="routeMap" destination="B9A-we-akF" id="DBf-O6-EjY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GTs-Sx-ODf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444" y="-800.2463054187192"/>
         </scene>
         <!--Profile-->
         <scene sceneID="z6O-s5-I9j">
@@ -1814,7 +2015,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hyn-mE-PHi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1215.2" y="868.9655172413793"/>
+            <point key="canvasLocation" x="-1020" y="2161"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yOJ-S3-qeN">
@@ -1850,25 +2051,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ale-gx-86E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1420" y="1099.5073891625616"/>
+            <point key="canvasLocation" x="-2143" y="1345"/>
         </scene>
     </scenes>
     <resources>
-        <image name="accessible" width="712" height="656"/>
+        <image name="CBD parking" width="1890" height="1890"/>
+        <image name="accessible-1" width="1890" height="1890"/>
+        <image name="accident" width="1890" height="1890"/>
         <image name="brightmroute" width="209" height="209"/>
         <image name="close" width="47.333332061767578" height="47.333332061767578"/>
         <image name="currentlocation" width="28.333333969116211" height="29.666666030883789"/>
-        <image name="emergency" width="534" height="492"/>
+        <image name="cycling" width="1890" height="1890"/>
         <image name="icons8-home-30" width="30" height="30"/>
         <image name="icons8-settings-30" width="40" height="40"/>
         <image name="maps-icon" width="64" height="64"/>
+        <image name="my parking" width="1890" height="1890"/>
         <image name="out" width="512" height="512"/>
-        <image name="parking" width="532" height="492"/>
         <image name="pin" width="42.666667938232422" height="42.666667938232422"/>
-        <image name="profile" width="512" height="512"/>
-        <image name="pronezone" width="712" height="656"/>
+        <image name="profile" width="1890" height="1890"/>
+        <image name="quiz" width="1890" height="1890"/>
         <image name="restart" width="512" height="512"/>
-        <image name="rules" width="712" height="660"/>
         <image name="scoreCheck" width="1024" height="768"/>
     </resources>
 </document>

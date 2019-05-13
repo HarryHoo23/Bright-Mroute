@@ -4,7 +4,7 @@
 //
 //  Created by zhongheng on 9/4/19.
 //  Copyright © 2019 Zhongheng Hu. All rights reserved.
-//This viewController will be responsible for iteration 2 that set up user's preference in emergency contact.
+// This viewController will be responsible for iteration 3 that set up user's profile.
 
 import UIKit
 import Firebase
@@ -21,30 +21,19 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         profilePicImage.clipsToBounds = true
         profilePicImage.layer.cornerRadius = profilePicImage.frame.size.width / 2
+        // Make the profile picture as circle.
+        profilePicImage.layer.borderWidth = 2
+        profilePicImage.layer.borderColor = UIColor.gray.cgColor
+        // Set the border color.
         let signOutButton = UIBarButtonItem(title: "Sign Out", style: .done, target: self, action: #selector(tapButton))
         self.navigationItem.rightBarButtonItem = signOutButton
         checkIfUserIsLoggedIn()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let uid = Auth.auth().currentUser?.uid
-        let url = Storage.storage().reference().child("\(uid!).png")
-        DispatchQueue.main.async {
-            url.getData(maxSize: 10 * 1024 * 1024) { (data, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }else {
-                    self.profilePicImage.image = UIImage(data: data!)
-                }
-            }
-        }
-        
-    }
-    
-    func checkIfUserIsLoggedIn(){
+    func checkIfUserIsLoggedIn(){ // check if a user is logging or not.
         if Auth.auth().currentUser?.uid == nil {
             print("Not Logged in.")
+            self.dismiss(animated: true, completion: nil)
         } else {
             let uid = Auth.auth().currentUser?.uid
             Database.database().reference().child("Users").child(uid!).observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
@@ -53,16 +42,19 @@ class SettingViewController: UIViewController {
                     self.roadAssist = dictionary["roadAssistance"] as? String
                     self.nameLabel.text = "Welcome " + self.name!
                     self.providerLabel.text = "Your Provider: " + self.roadAssist!
+                    let imageUrl = dictionary["profileImageUrl"] as? String
+                    self.profilePicImage.download(from: imageUrl!) // add picture.
                 }
             })
         }
     }
     
-    @objc func tapButton(){
+    @objc func tapButton(){ // the sign out button action.
         do {
             try Auth.auth().signOut()
-        }catch {}
-        
+        }catch {
+            print("Error")
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
