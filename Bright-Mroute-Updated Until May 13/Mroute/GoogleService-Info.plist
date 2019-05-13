@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>864202850387-sbkfmg8ogqol7e83b2cvq1884926g4kh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.864202850387-sbkfmg8ogqol7e83b2cvq1884926g4kh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDbZv_1hWKVzUlPjqDShkV4toMrzsOlLlU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>864202850387</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Monash.Mroute</string>
+	<key>PROJECT_ID</key>
+	<string>mroute-project</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mroute-project.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:864202850387:ios:6f3281d06af9fb39</string>
+	<key>DATABASE_URL</key>
+	<string>https://mroute-project.firebaseio.com</string>
+</dict>
+</plist>
