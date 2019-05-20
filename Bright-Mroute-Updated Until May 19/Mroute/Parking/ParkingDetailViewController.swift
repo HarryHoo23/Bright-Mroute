@@ -94,9 +94,9 @@ class ParkingDetailViewController: UIViewController, MKMapViewDelegate, CLLocati
                 let street = placemark.locality
                 if addressname != nil && region != nil && postcode != nil && country != nil && street != nil {
                     let address = addressname! + ", " + street! + ", " + region! + " " + postcode! + ", " + country!
-                    self.addressLabel!.text = "Address: " + addressname! + ", " + street! + ", " + region! + " " + postcode! + ", " + country!
+                    self.addressLabel!.text = "Address: " + address
                 } else {
-                    print("error")
+                    self.addressLabel.text = "Cannot read your address"
                 }
             }
         }

@@ -107,10 +107,8 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
             self.quizType = "bike"
             self.addBikeQuiz()
             self.quizArray = self.bikeQuizArray
-            print(self.quizArray.count)
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "showQuiz", sender: nil)
-                
             }
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -202,6 +200,7 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     //add quiz question from database.
     func addQuestion(){
         var correctAnswer: Int = 0
+        var auto = [Question]()
         let ref2 = Database.database().reference().child("Quiz") // this is the car quiz
         ref2.observe(.value , with: { snapshot in
                 for data in snapshot.children.allObjects as! [DataSnapshot]{
@@ -227,7 +226,8 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
                         break
                     }
                     let quiz = Question(questionText: question, choiceA: "A. " + choiceA, choiceB: "B. " + choiceB, choiceC: "C. " + choiceC, choiceD: "D. " + choiceD, answer: correctAnswer, qNumber: number, qDescription: description)
-                    self.autoQuizArray.append(quiz)
+                    auto.append(quiz)
+                    self.autoQuizArray = auto
                 }
         })
     }
@@ -235,6 +235,7 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     
     func addBikeQuiz(){ //Same as car quiz, but this function is adding bike quiz, just to differentiate.
         var correctAnswer: Int = 0
+        var bike = [Question]()
         let ref2 = Database.database().reference().child("BikeQuiz")
         ref2.observe(.value , with: { snapshot in
             for data in snapshot.children.allObjects as! [DataSnapshot]{
@@ -260,7 +261,8 @@ class DashBoardViewController: UIViewController, MKMapViewDelegate, CLLocationMa
                     break
                 }
                 let quiz = Question(questionText: question, choiceA: "A. " + choiceA, choiceB: "B. " + choiceB, choiceC: "C. " + choiceC, choiceD: "D. " + choiceD, answer: correctAnswer, qNumber: number, qDescription: description)
-                self.bikeQuizArray.append(quiz)
+                bike.append(quiz)
+                self.bikeQuizArray = bike
             }
         })
     }

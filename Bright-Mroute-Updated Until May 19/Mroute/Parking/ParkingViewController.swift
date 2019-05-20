@@ -69,10 +69,10 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         }else{
             locationManager.requestWhenInUseAuthorization()
         }
-        
         parkingMap.mapType = .standard
         parkingMap.isZoomEnabled = true
         parkingMap.isScrollEnabled = true
+        deleteAllData("Location")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -183,7 +183,6 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.parkingList.remove(at: indexPath.row)
                 self.managedObjectContext.delete(parkDelete)
                 self.tableView.reloadData()
-                self.viewWillAppear(true)
             }
             let dismissAction = UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default){(action) in
                 return
@@ -197,11 +196,9 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
     // This function indicate the list of the parking location.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
+            var address : String?
             let cell = tableView.dequeueReusableCell(withIdentifier: "reuseLocation", for: indexPath)
             self.tableView.rowHeight = 80
-            if indexPath.row == 0 {
-                cell.backgroundColor = UIColor.yellow
-            }
             let m : Location
             m = self.parkingList[indexPath.row]
             if m.latitude != nil && m.longitude != nil {
@@ -221,12 +218,16 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
                         let postcode = placemark.postalCode
                         let country = placemark.country
                         let street = placemark.locality
-                        let address = addressname! + ", " + street! + ", " + region! + " " + postcode! + ", " + country!
+                        if addressname != nil && region != nil && postcode != nil && street != nil {
+                            address = addressname! + ", " + street! + ", " + region! + " " + postcode! + ", " + country!
+                        } else {
+                            address = "Cannot read your address"
+                        }
                         cell.detailTextLabel?.text = address
                     }
                 }
             } else {
-                print(m.description)
+                print("Error")
             }
             cell.textLabel?.text = "\(indexPath.row + 1). Time: " + m.date!
             cell.accessoryType = .disclosureIndicator
@@ -286,7 +287,9 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         insertRows()
         sortByDate()
         let alert = UIAlertController(title: "Successful", message: "Location Saved!", preferredStyle: UIAlertController.Style.alert)
-        let dismissAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        let dismissAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.tableView.reloadData()
+        }
         alert.addAction(dismissAction)
         self.present(alert,animated: true, completion: nil)
     }

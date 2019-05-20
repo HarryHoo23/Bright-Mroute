@@ -93,10 +93,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
         let button = UIBarButtonItem(title: "Show All", style: .done, target: self, action: #selector(showAll))
         self.navigationItem.rightBarButtonItem = button
         retrieveData()
-
     }
-
-    
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
@@ -170,6 +167,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
                     self.p.append(contentsOf: smartParkings)
                     self.p = self.p.sorted {$0.bay_id < $1.bay_id}
                 }
+                
                 DispatchQueue.main.async {
                     for index in 0..<park.count{
                         let latitude = park[index].latitude!

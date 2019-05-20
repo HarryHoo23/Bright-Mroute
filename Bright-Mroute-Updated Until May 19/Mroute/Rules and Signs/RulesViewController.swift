@@ -82,6 +82,7 @@ class RulesViewController: UIViewController {
         updateProgress()
     }
     
+    
     @IBAction func answerPress(_ sender: UIButton) {
         //when the button of choice is clicked.
         let popVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popView") as! PopUpViewController
@@ -156,13 +157,11 @@ class RulesViewController: UIViewController {
             questionNumberLabel.text = "\(resultArray.count)/ \(resultArray.count)"
             progressView.frame.size.width = (view.frame.size.width / CGFloat(resultArray.count)) * CGFloat(resultArray.count)
         } else {
-
             questionNumberLabel.text = "\(questionNumber + 1)/ \(resultArray.count)"
             progressView.frame.size.width = (view.frame.size.width / CGFloat(resultArray.count)) * CGFloat(questionNumber + 1) // the pregress view size is changing based on the question goes.
         }
             scoreLabel.text = "Score: \(score)"
     }
-    
 }
 
 
@@ -170,21 +169,31 @@ extension RulesViewController{
     func randomQuestions(){
         //choose random question from the database.
         var quizArray = [Question]()
-        while quizArray.count < 10 && questions.count != 0 {
-            let randomIndex = Int(arc4random_uniform(UInt32(questions.count))) //create a random number1.
-            let randomIndex2 = Int(arc4random_uniform(UInt32(questions.count)))// create a random number2.
-            if randomIndex > randomIndex2 {
-               quizArray.insert(questions[randomIndex - randomIndex2], at: 0) // insert into the new array.
-            }else if randomIndex == randomIndex2{
-                quizArray.insert(questions[randomIndex], at: 0) // insert into the new array.
-            }else{
-                quizArray.insert(questions[randomIndex2 - randomIndex], at: 0) // insert into the new array.
+        var randomIndex : [Int]
+        randomIndex = getRandomNumbers(maxNumber: 10, listSize: questions.count)
+        print(randomIndex)
+        if quizArray.count < 10 && questions.count != 0 {
+            for i in 0..<10 {
+                quizArray.insert(questions[randomIndex[i]], at: 0)
             }
-            //we are doing this with if statement try to keep no repeat questions appers.
         }
         resultArray = quizArray
     }
     
+    func getRandomNumbers(maxNumber: Int, listSize: Int)-> [Int]{
+        guard maxNumber < listSize else { return [] }
+        var indexSet = IndexSet(integersIn: 0...listSize)
+        var randomInts = [Int]()
+        
+        while randomInts.count < maxNumber {
+            guard let currentInt = indexSet.integerLessThanOrEqualTo(Int(arc4random_uniform(UInt32(listSize)))) else {
+                continue
+            }
+            randomInts.append(currentInt)
+            indexSet.remove(currentInt)
+        }
+        return randomInts
+    }
     
     func restartQuiz(){
         // restart the quiz function.

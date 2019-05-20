@@ -65,7 +65,7 @@ class ZoneDetailViewController: UIViewController, CLLocationManagerDelegate {
             criticalLabel.text = ""
             frequencyLabel.text = ""
             //turnImageView.image = UIImage(named: "HookTurn")
-            turnInstructionImageView.loadGif(name: "hookTurn")
+            turnInstructionImageView.loadGif(name: "hook-turn")
             instructionLabel.text = "Instruction About How to Turn: "
             turnImageView.image = UIImage(named: "HookTurn")
         }else{

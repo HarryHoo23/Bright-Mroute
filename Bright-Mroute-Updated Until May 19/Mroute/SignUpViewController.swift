@@ -63,7 +63,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.hideKeyboard()
         NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(Keyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,10 +111,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             }
             guard let uid = user?.user.uid else { return }
             if error == nil && user != nil {
-                DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                DispatchQueue.main.async {
                     UIApplication.shared.beginIgnoringInteractionEvents()
-                    // when it's signing up, show activity loading indicator.
-                })
+                }
                 let imageName = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("\(imageName).png") //add picture.
                 if let upload = self.profileImage.image!.jpeg(.lowest){
