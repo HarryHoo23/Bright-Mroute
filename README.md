@@ -48,6 +48,8 @@ open the podfile and add the following library:
 
 # Authors
 
+Developing by Team 24, Wonder 4, Monash IE group.
+
 * Developer: Zhongheng Hu (Master of Information Technology)
 * Data Analyst：Qi Lin (Master of Data Science)
 * Business Information Analyst: Xiaomeng Tian (Master of Business Information System)
