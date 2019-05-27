@@ -33,11 +33,12 @@ pod init
 open the podfile and add the following library:
 
 `pod 'Firebase/Auth'`
+
 `pod 'Firebase/Database'`
 
-`pod 'Firebase/Storage'
+`pod 'Firebase/Storage'`
 
-pod 'MBCircularProgressBar'
+`pod 'MBCircularProgressBar'`
 
-pod install`
+`pod install`
 
