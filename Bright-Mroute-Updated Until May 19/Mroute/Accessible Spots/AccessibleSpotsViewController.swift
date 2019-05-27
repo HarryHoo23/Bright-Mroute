@@ -76,15 +76,19 @@ class AccessibleSpotsViewController: UIViewController, MKMapViewDelegate, CLLoca
     
     // add annotaions from facility array.
     func addDifferentAnnotation(assetType: String){
+        var name: String?
         for data in facility {
             if data.assetType == assetType {
                 let latitude = data.latitude!
                 let longitude = data.longitude!
-                let name = data.name!
-                
+                if data.name == "Information  Pillar" {
+                    name = "Information Center"
+                } else {
+                    name = data.name!
+                }
                 //let location = CLLocation(latitude: latitude, longitude: longitude)
                 let fenceAnnotation = CLLocationCoordinate2DMake(latitude, longitude)
-                let toiletsAnnotation = Annotation(newTitle: name, subtitle: assetType, location: fenceAnnotation)
+                let toiletsAnnotation = Annotation(newTitle: name!, subtitle: assetType, location: fenceAnnotation)
                 self.acMap.addAnnotation(toiletsAnnotation as MKAnnotation) // put annotations on map
             }
         }

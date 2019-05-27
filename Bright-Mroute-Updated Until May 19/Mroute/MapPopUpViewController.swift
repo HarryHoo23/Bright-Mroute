@@ -20,6 +20,7 @@ class MapPopUpViewController: UIViewController { //  This view is responsible fo
     var bayId: Int64?
     var days: String?
     var timeDuration: Int?
+    var payment: String?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
@@ -56,7 +57,7 @@ class MapPopUpViewController: UIViewController { //  This view is responsible fo
         
         detailLabel.text = duration! + " (\(time!))"
         dayLabel.text = "From: " + days! + " \(timeDuration!) Mins"
-        bayLabel.text = "Bay:  \(bayId!)"
+        bayLabel.text = "Bay:  \(bayId!)" + "\nPayment Type:  \(payment!)"
         markerIdLabel.text = "Street marker: " + marker!
         let pFifteen = "15P"
         let pThirty = "30P"

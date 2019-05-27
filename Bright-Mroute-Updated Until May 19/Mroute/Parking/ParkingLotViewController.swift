@@ -30,7 +30,6 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
     
     @IBOutlet weak var parkingCollectionView: UICollectionView!
     @IBOutlet weak var parkingLotMap: MKMapView!
-    
     var smart = [ParkingLot]()
     var p = [ParkingBay]()
     
@@ -49,6 +48,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
     var marker: String?
     var bayId: Int64?
     var days: String?
+    var payment: String?
     var timeDuration: Int?
     var locationManager: CLLocationManager = CLLocationManager()
     
@@ -90,10 +90,12 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
             self.markers.append("\(data.bayId!)")
         }
         
-        let button = UIBarButtonItem(title: "Show All", style: .done, target: self, action: #selector(showAll))
+        let image = UIImage(named: "refresh")
+        let button = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(showAll))
         self.navigationItem.rightBarButtonItem = button
         retrieveData()
     }
+    
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
@@ -124,6 +126,7 @@ class ParkingLotViewController: UIViewController, MKMapViewDelegate, CLLocationM
             }
         }
     }
+    
 
     func removeAnnotation(){
         self.parkingLotMap.removeAnnotations(self.parkingLotMap.annotations)
@@ -268,6 +271,7 @@ extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDa
                 timeDuration = smart[index].timeDuration
                 days = smart[index].days
                 marker = smart[index].streetMarkerId
+                payment = smart[index].payment
                 //print(status!)
             }
         selectedAnnotation = annotation
@@ -289,6 +293,7 @@ extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDa
             popVc.marker = marker
             popVc.annotation = selectedAnnotation
             popVc.timeDuration = timeDuration
+            popVc.payment = payment
         }
     }
     
@@ -305,3 +310,4 @@ extension ParkingLotViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
 }
+

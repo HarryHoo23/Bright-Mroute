@@ -72,7 +72,7 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         parkingMap.mapType = .standard
         parkingMap.isZoomEnabled = true
         parkingMap.isScrollEnabled = true
-        deleteAllData("Location")
+        //deleteAllData("Location")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,6 +96,11 @@ class ParkingViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("Detele all data in \(entity) error :", error)
         }
     }
+    
+    @IBAction func showCurrentLocation(_ sender: Any) {
+        locationManager.startUpdatingLocation()
+    }
+    
     
     func saveData(){
         do {
@@ -333,5 +338,17 @@ extension ParkingViewController{
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //Access the last object from locations to get perfect current location
+        if let location = locations.last {
+            let span = MKCoordinateSpan(latitudeDelta: 0.00775, longitudeDelta: 0.00775)
+            let myLocation = CLLocationCoordinate2DMake(location.coordinate.latitude,location.coordinate.longitude)
+            let region = MKCoordinateRegion(center: myLocation, span: span)
+            parkingMap.setRegion(region, animated: true)
+        }
+        self.parkingMap.showsUserLocation = true
+        manager.stopUpdatingLocation()
     }
 }

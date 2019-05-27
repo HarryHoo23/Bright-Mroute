@@ -29,7 +29,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBAction func currentLocationButton(_ sender: Any) {
         locationManager.startUpdatingLocation()
-        
     }
     
     @IBOutlet weak var hookTurnAndProneZoneSegment: UISegmentedControl!
