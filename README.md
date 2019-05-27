@@ -46,3 +46,9 @@ open the podfile and add the following library:
 
 `pod install`
 
+# Authors
+
+* Developer: Zhongheng Hu (Master of Information Technology)
+* Data Analyst：Qi Lin (Master of Data Science)
+* Business Information Analyst: Xiaomeng Tian (Master of Business Information System)
+* Software Tester: Ganesh Prakash (Master of Information Technology)
