@@ -7,6 +7,7 @@ What is Bright Mroute?
 
 Basically, Bright Mroute is an iOS application that helps to increase the awareness of road safety and rules whilst driving and cycling in Melbourne, it will also helps improve the convinience in finding parking and bike routes. It targets at the audience groups which are new drivers, tourists and cyclists in Melbourne. 
 
+This project is written in Swift Language under the MacOS environment. Swift is a high-performance system programming language. It has a clean and modern syntax, offers seamless access to existing C and Objective-C code and frameworks, and is memory safe by default.
 
 # Main Functions
 This application is aiming to help people to avoid high risk zone on the road in Melbourne CBD, and be aware of Hook turn.
@@ -18,7 +19,12 @@ After registered, Bright Mroute will help you to call your chosen roadside assis
 
 Click on the different version of the bright mroute, and download them to run the applications via XCode. 
 
-# Cocoa Pods installation
+# Geting Started
+System required: Currently, the compatiable systems that can run XCode will be macOS. Download Xcode from app store by using a MacOS devices and install the XCode. 
+
+Download the files of Bright Mroute and open the Mroute.xcworkspace file, now the application starts. 
+
+## Cocoa Pods installation
 This application has used CocoaPods with link of Firebase and MBCircularProgressBar
 Open the terminal, direct to the project destination and enter the following code to install the required pod. 
 pod init
