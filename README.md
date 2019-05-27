@@ -27,12 +27,17 @@ Download the files of Bright Mroute and open the Mroute.xcworkspace file, now th
 ## Cocoa Pods installation
 This application has used CocoaPods with link of Firebase and MBCircularProgressBar
 Open the terminal, direct to the project destination and enter the following code to install the required pod. 
+
 pod init
 
 open the podfile and add the following library:
+
 pod 'Firebase/Auth'
+
 pod 'Firebase/Database'
+
 pod 'Firebase/Storage'
+
 pod 'MBCircularProgressBar'
 
 pod install
