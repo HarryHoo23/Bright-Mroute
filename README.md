@@ -24,6 +24,10 @@ System required: Currently, the compatiable systems that can run XCode will be m
 
 Download the files of Bright Mroute and open the Mroute.xcworkspace file, now the application starts. 
 
+## Requirements
+* XCode 10.2
+* Swift 4.2 and above, Swift 5.0
+
 ## Cocoa Pods installation
 This application has used CocoaPods with link of Firebase and MBCircularProgressBar
 Open the terminal, direct to the project destination and enter the following code to install the required pod. 
