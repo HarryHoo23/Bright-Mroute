@@ -54,3 +54,7 @@ Developing by Team 24, Wonder 4, Monash IE group.
 * Data Analyst：Qi Lin (Master of Data Science)
 * Business Information Analyst: Xiaomeng Tian (Master of Business Information System)
 * Software Tester: Ganesh Prakash (Master of Information Technology)
+
+# Installation
+
+To install Bright Mroute and run at your iPhone, you need to have a MacOS system computer with Xcode installed. Click the Mroute.xcworkspace file to open the Xcode, connect your iPhone to the computer, and choose your own phone on the life corner. Click 'run' button to install the application. 
