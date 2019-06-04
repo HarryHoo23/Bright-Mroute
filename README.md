@@ -1,6 +1,6 @@
 # Bright-Mroute
 
-The Bright-Mroute ios Application running on iPhone. The Bright-Mroute is developed by Wonder 4, TA 24. 
+The Bright-Mroute is an iOS Application running on iPhone. It is developed by Wonder 4, TA 24 as IE final project, and the topic of this project is "Changing Melbourne". 
 
 # Project Description
 What is Bright Mroute? 
